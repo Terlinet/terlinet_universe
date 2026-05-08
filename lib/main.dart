@@ -158,52 +158,68 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         })
       ]);
 
+      DateTime lastProcessTime = DateTime.now();
+
       js_util.callMethod(_faceDetection, 'onResults', [
         allowInterop((results) {
-          if (!mounted || results == null) return;
+          if (!mounted) return;
+          
+          // Limita o processamento para evitar erros de concorrência (max 10fps)
+          final now = DateTime.now();
+          if (now.difference(lastProcessTime).inMilliseconds < 100) return;
+          lastProcessTime = now;
 
           try {
+            if (results == null) return;
+            
             final detections = js_util.getProperty(results, 'detections');
-            bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
+            if (detections == null) return;
+            
+            final int len = js_util.getProperty(detections, 'length') ?? 0;
+            bool found = len > 0;
             
             List<Offset> points = [];
             if (found) {
               final firstDetection = js_util.getProperty(detections, 0);
-              final locationData = js_util.getProperty(firstDetection, 'locationData');
-              final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
-              
-              if (keypoints != null) {
-                int len = js_util.getProperty(keypoints, 'length');
-                for (int i = 0; i < len; i++) {
-                  final kp = js_util.getProperty(keypoints, i);
-                  if (kp != null) {
-                    points.add(Offset(
-                      js_util.getProperty(kp, 'x'),
-                      js_util.getProperty(kp, 'y')
-                    ));
+              if (firstDetection != null) {
+                final locationData = js_util.getProperty(firstDetection, 'locationData');
+                if (locationData != null) {
+                  final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
+                  if (keypoints != null) {
+                    final int kpLen = js_util.getProperty(keypoints, 'length') ?? 0;
+                    for (int i = 0; i < kpLen; i++) {
+                      final kp = js_util.getProperty(keypoints, i);
+                      if (kp != null) {
+                        try {
+                          double? x = js_util.getProperty(kp, 'x')?.toDouble();
+                          double? y = js_util.getProperty(kp, 'y')?.toDouble();
+                          if (x != null && y != null) {
+                            points.add(Offset(x, y));
+                          }
+                        } catch (_) {}
+                      }
+                    }
                   }
                 }
               }
             }
 
-            if (mounted) {
-              setState(() {
-                _facePoints = points;
-                if (found != _isUserLooking) {
-                  _isUserLooking = found;
-                  if (_isUserLooking && !_isProcessing) {
-                    _triggerAiInteraction();
-                  }
+            setState(() {
+              _facePoints = points;
+              if (found != _isUserLooking) {
+                _isUserLooking = found;
+                if (_isUserLooking && !_isProcessing) {
+                  _triggerAiInteraction();
                 }
-              });
-            }
+              }
+            });
           } catch (e) {
-            print("Erro no processamento de frames: $e");
+            // Silencia erros internos de frame para manter o console limpo
           }
         })
       ]);
     } catch (e) {
-      print('Erro ao iniciar IA: $e');
+      print('Erro fatal ao iniciar IA: $e');
     }
   }
 
