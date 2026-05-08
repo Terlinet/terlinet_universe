@@ -160,36 +160,46 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
       js_util.callMethod(_faceDetection, 'onResults', [
         allowInterop((results) {
-          final detections = js_util.getProperty(results, 'detections');
-          bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
-          
-          List<Offset> points = [];
-          if (found) {
-            final firstDetection = js_util.getProperty(detections, 0);
-            final locationData = js_util.getProperty(firstDetection, 'locationData');
-            final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
-            
-            if (keypoints != null) {
-              int len = js_util.getProperty(keypoints, 'length');
-              for (int i = 0; i < len; i++) {
-                final kp = js_util.getProperty(keypoints, i);
-                points.add(Offset(
-                  js_util.getProperty(kp, 'x'),
-                  js_util.getProperty(kp, 'y')
-                ));
-              }
-            }
-          }
+          if (!mounted || results == null) return;
 
-          setState(() {
-            _facePoints = points;
-            if (found != _isUserLooking) {
-              _isUserLooking = found;
-              if (_isUserLooking && !_isProcessing) {
-                _triggerAiInteraction();
+          try {
+            final detections = js_util.getProperty(results, 'detections');
+            bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
+            
+            List<Offset> points = [];
+            if (found) {
+              final firstDetection = js_util.getProperty(detections, 0);
+              final locationData = js_util.getProperty(firstDetection, 'locationData');
+              final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
+              
+              if (keypoints != null) {
+                int len = js_util.getProperty(keypoints, 'length');
+                for (int i = 0; i < len; i++) {
+                  final kp = js_util.getProperty(keypoints, i);
+                  if (kp != null) {
+                    points.add(Offset(
+                      js_util.getProperty(kp, 'x'),
+                      js_util.getProperty(kp, 'y')
+                    ));
+                  }
+                }
               }
             }
-          });
+
+            if (mounted) {
+              setState(() {
+                _facePoints = points;
+                if (found != _isUserLooking) {
+                  _isUserLooking = found;
+                  if (_isUserLooking && !_isProcessing) {
+                    _triggerAiInteraction();
+                  }
+                }
+              });
+            }
+          } catch (e) {
+            print("Erro no processamento de frames: $e");
+          }
         })
       ]);
     } catch (e) {
@@ -363,7 +373,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  _isUserLooking ? "ID CONFIRMADO" : "PROCURANDO ALVO",
+                  _isUserLooking ? "IDENTIDADE RECONHECIDA" : "EM STANDBY",
                   style: TextStyle(
                     color: _isUserLooking ? Colors.blueAccent : Colors.white24,
                     fontSize: 9,
