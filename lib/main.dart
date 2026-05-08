@@ -56,8 +56,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   dynamic _recognition; // SpeechRecognition
   bool _isListening = false;
 
-  // Configuração do Servidor Hugging Face
-  final String _apiUrl = "https://tertulianoshow-terlinet.hf.space/query";
+  // Configuração do Servidor Hugging Face Exclusivo
+  final String _apiUrl = "https://tertulianoshow-terlinet-universe.hf.space/query";
 
   @override
   void initState() {
