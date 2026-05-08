@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   dynamic _recognition; // SpeechRecognition
   bool _isListening = false;
 
-  // Configuração do Servidor Hugging Face Exclusivo
+  // Configuração do Servidor Hugging Face Exclusivo (URL Corrigida para hifens)
   final String _apiUrl = "https://tertulianoshow-terlinet-universe.hf.space/query";
 
   @override
@@ -92,6 +92,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _initFaceIA();
     _startCamera();
     _initSpeechRecognition();
+    
+    // Testa a conexão ao iniciar
+    _checkServerStatus();
+  }
+
+  Future<void> _checkServerStatus() async {
+    try {
+      final response = await html.window.fetch("https://tertulianoshow-terlinet-universe.hf.space/");
+      if (response.ok) {
+        print("Conexão com servidor TerlineT estabelecida com sucesso.");
+      }
+    } catch (e) {
+      print("Aviso: Servidor pode estar iniciando ou bloqueado por CORS.");
+    }
   }
 
   void _initSpeechRecognition() {
@@ -109,20 +123,21 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           final firstAlternative = js_util.getProperty(firstResult, 0);
           final transcript = js_util.getProperty(firstAlternative, 'transcript');
           
-          setState(() {
-            _textController.text = transcript;
-            _isListening = false;
-          });
-          _triggerAiInteraction(customText: transcript);
+          if (mounted) {
+            setState(() {
+              _textController.text = transcript;
+              _isListening = false;
+            });
+            _triggerAiInteraction(customText: transcript);
+          }
         }));
 
         js_util.setProperty(_recognition, 'onerror', allowInterop((error) {
-          setState(() => _isListening = false);
-          print("Erro Speech Recognition: $error");
+          if (mounted) setState(() => _isListening = false);
         }));
 
         js_util.setProperty(_recognition, 'onend', allowInterop((_) {
-          setState(() => _isListening = false);
+          if (mounted) setState(() => _isListening = false);
         }));
       }
     } catch (e) {
@@ -164,7 +179,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         allowInterop((results) {
           if (!mounted) return;
           
-          // Limita o processamento para evitar erros de concorrência (max 10fps)
           final now = DateTime.now();
           if (now.difference(lastProcessTime).inMilliseconds < 100) return;
           lastProcessTime = now;
@@ -204,18 +218,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               }
             }
 
-            setState(() {
-              _facePoints = points;
-              if (found != _isUserLooking) {
-                _isUserLooking = found;
-                if (_isUserLooking && !_isProcessing) {
-                  _triggerAiInteraction();
+            if (mounted) {
+              setState(() {
+                _facePoints = points;
+                if (found != _isUserLooking) {
+                  _isUserLooking = found;
+                  if (_isUserLooking && !_isProcessing) {
+                    _triggerAiInteraction();
+                  }
                 }
-              }
-            });
-          } catch (e) {
-            // Silencia erros internos de frame para manter o console limpo
-          }
+              });
+            }
+          } catch (e) {}
         })
       ]);
     } catch (e) {
@@ -238,12 +252,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           );
         }
       });
-      setState(() => _hasCamera = true);
+      if (mounted) setState(() => _hasCamera = true);
     } catch (e) {
-      setState(() {
-        _hasCamera = false;
-        _aiMessage = "Câmera não detectada ou permissão negada. Use o teclado ou voz para falar.";
-      });
+      if (mounted) {
+        setState(() {
+          _hasCamera = false;
+          _aiMessage = "Câmera indisponível. Utilize texto ou voz para interagir.";
+        });
+      }
     }
   }
 
@@ -253,18 +269,23 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     
     final prompt = customText ?? "Olá TerlineT, acabei de olhar para você. Me dê as boas vindas ao seu universo e pergunte como pode me ajudar.";
 
-    setState(() {
-      _isProcessing = true;
-      _isAiTalking = true;
-      _aiMessage = "Consultando rede neural TerlineT...";
-    });
+    if (mounted) {
+      setState(() {
+        _isProcessing = true;
+        _isAiTalking = true;
+        _aiMessage = "Conectando ao núcleo neural...";
+      });
+    }
 
     try {
       final response = await html.window.fetch(
         _apiUrl,
         js_util.jsify({
           'method': 'POST',
-          'headers': {'Content-Type': 'application/json'},
+          'headers': {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
           'body': jsonEncode({
             'text': prompt,
             'is_agent': false,
@@ -272,25 +293,33 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         }),
       );
 
+      if (!response.ok) {
+        throw Exception("Erro no servidor: ${response.status}");
+      }
+
       final data = await response.json();
       final textResponse = js_util.getProperty(data, 'text');
       final audioBase64 = js_util.getProperty(data, 'audio');
 
-      setState(() {
-        _aiMessage = textResponse;
-        _isProcessing = false;
-        _textController.clear();
-      });
+      if (mounted) {
+        setState(() {
+          _aiMessage = textResponse;
+          _isProcessing = false;
+          _textController.clear();
+        });
+      }
 
       if (audioBase64 != null) {
         _playAiVoice(audioBase64);
       }
     } catch (e) {
-      setState(() {
-        _aiMessage = "Erro ao conectar com TerlineT: Verifique se o servidor está online.";
-        _isProcessing = false;
-      });
-      print("Erro na API HuggingFace: $e");
+      print("DETALHE DO ERRO DE CONEXÃO: $e");
+      if (mounted) {
+        setState(() {
+          _aiMessage = "Sincronização pendente. Tente enviar uma mensagem de texto.";
+          _isProcessing = false;
+        });
+      }
     }
   }
 
