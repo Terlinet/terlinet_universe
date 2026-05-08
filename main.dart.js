@@ -76280,7 +76280,7 @@ f=t.N
 e=t.K
 e=A.W(A.ao(["method","POST","headers",A.ao(["Content-Type","application/json"],f,f),"body",B.dG.PE(A.ao(["text",m,"is_agent",!1],f,e),null)],f,e))
 d=e!=null?A.amE(e):null
-g=g.fetch("https://tertulianoshow-terlinet.hf.space/query",d)
+g=g.fetch("https://tertulianoshow-terlinet-universe.hf.space/query",d)
 g.toString
 f=t.z
 s=7
