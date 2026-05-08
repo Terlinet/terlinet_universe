@@ -50,6 +50,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _isAiTalking = false;
   bool _isProcessing = false;
   bool _hasCamera = true;
+  List<Offset> _facePoints = []; // Armazena os pontos de detecção
 
   // Controllers para entrada do usuário
   final TextEditingController _textController = TextEditingController();
@@ -162,14 +163,33 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           final detections = js_util.getProperty(results, 'detections');
           bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
           
-          if (found != _isUserLooking) {
-            setState(() {
+          List<Offset> points = [];
+          if (found) {
+            final firstDetection = js_util.getProperty(detections, 0);
+            final locationData = js_util.getProperty(firstDetection, 'locationData');
+            final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
+            
+            if (keypoints != null) {
+              int len = js_util.getProperty(keypoints, 'length');
+              for (int i = 0; i < len; i++) {
+                final kp = js_util.getProperty(keypoints, i);
+                points.add(Offset(
+                  js_util.getProperty(kp, 'x'),
+                  js_util.getProperty(kp, 'y')
+                ));
+              }
+            }
+          }
+
+          setState(() {
+            _facePoints = points;
+            if (found != _isUserLooking) {
               _isUserLooking = found;
               if (_isUserLooking && !_isProcessing) {
                 _triggerAiInteraction();
               }
-            });
-          }
+            }
+          });
         })
       ]);
     } catch (e) {
@@ -290,39 +310,65 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             },
           ),
 
-          // HUD do Usuário (Canto superior)
+          // HUD de Visão de IA (Canto superior) - Mostra apenas os pontos de detecção
           Positioned(
-            right: 20,
-            top: 20,
+            right: 30,
+            top: 30,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                   width: 120,
-                  height: 90,
+                  height: 100,
                   decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(15),
                     border: Border.all(
                       color: _isUserLooking ? Colors.blueAccent : Colors.white10,
-                      width: 2
+                      width: 1.5,
                     ),
-                    borderRadius: BorderRadius.circular(12),
                     boxShadow: _isUserLooking ? [
-                      BoxShadow(color: Colors.blue.withOpacity(0.3), blurRadius: 10)
+                      BoxShadow(
+                        color: Colors.blue.withOpacity(0.1),
+                        blurRadius: 15,
+                      )
                     ] : [],
                   ),
-                  child: const ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    child: HtmlElementView(viewType: 'webcam-view'),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Stack(
+                      children: [
+                        if (!_isUserLooking)
+                          const Center(
+                            child: Text(
+                              "SCANNING",
+                              style: TextStyle(
+                                color: Colors.white10,
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 2,
+                              ),
+                            ),
+                          ),
+                        CustomPaint(
+                          painter: FaceAnalysisPainter(
+                            points: _facePoints,
+                            isActive: _isUserLooking,
+                          ),
+                          child: Container(),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
                 Text(
-                  _isUserLooking ? "USUÁRIO DETECTADO" : "SCANNING...",
+                  _isUserLooking ? "ID CONFIRMADO" : "PROCURANDO ALVO",
                   style: TextStyle(
                     color: _isUserLooking ? Colors.blueAccent : Colors.white24,
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5
+                    letterSpacing: 1.5,
                   ),
                 ),
               ],
@@ -518,6 +564,98 @@ class Particle {
   double x, y, vx, vy;
   String? label;
   Particle({required this.x, required this.y, required this.vx, required this.vy, this.label});
+}
+
+class _PulseAnimation extends StatefulWidget {
+  final Color color;
+  const _PulseAnimation({required this.color});
+
+  @override
+  State<_PulseAnimation> createState() => _PulseAnimationState();
+}
+
+class _PulseAnimationState extends State<_PulseAnimation> with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _pulseController,
+      builder: (context, child) {
+        return Container(
+          width: 80 * _pulseController.value,
+          height: 80 * _pulseController.value,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: widget.color.withOpacity(1.0 - _pulseController.value),
+              width: 2,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class FaceAnalysisPainter extends CustomPainter {
+  final List<Offset> points;
+  final bool isActive;
+
+  FaceAnalysisPainter({required this.points, required this.isActive});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (!isActive || points.isEmpty) return;
+
+    final paint = Paint()
+      ..color = Colors.blueAccent
+      ..strokeWidth = 2.0
+      ..strokeCap = StrokeCap.round;
+
+    final linePaint = Paint()
+      ..color = Colors.blueAccent.withOpacity(0.3)
+      ..strokeWidth = 0.5;
+
+    // Converte pontos relativos para coordenadas do widget
+    List<Offset> canvasPoints = points.map((p) => Offset(
+      (1 - p.dx) * size.width, // Inverte X para efeito espelho
+      p.dy * size.height
+    )).toList();
+
+    // Desenha as linhas de conexão (Malha de análise)
+    for (int i = 0; i < canvasPoints.length; i++) {
+      for (int j = i + 1; j < canvasPoints.length; j++) {
+        canvas.drawLine(canvasPoints[i], canvasPoints[j], linePaint);
+      }
+    }
+
+    // Desenha os pontos (Keypoints)
+    for (var point in canvasPoints) {
+      canvas.drawCircle(point, 3, paint);
+      // Brilho externo nos pontos
+      canvas.drawCircle(point, 6, paint..color = Colors.blueAccent.withOpacity(0.2));
+      paint.color = Colors.blueAccent; // Restaura cor
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant FaceAnalysisPainter oldDelegate) => true;
 }
 
 class UniversePainter extends CustomPainter {
