@@ -1,39 +1,19 @@
-2026/05/09-19:16:53.521 3d04 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.5238ab9e\flutter_tools_chrome_device.cd6635c9\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/09-19:16:53.525 3d04 Recovering log #3
-2026/05/09-19:16:53.525 3d04 Level-0 table #39: started
-2026/05/09-19:16:53.539 3d04 Level-0 table #39: 540 bytes OK
-2026/05/09-19:16:53.539 3d04 Recovering log #6
-2026/05/09-19:16:53.539 3d04 Level-0 table #40: started
-2026/05/09-19:16:53.552 3d04 Level-0 table #40: 165 bytes OK
-2026/05/09-19:16:53.553 3d04 Recovering log #10
-2026/05/09-19:16:53.553 3d04 Level-0 table #41: started
-2026/05/09-19:16:53.559 3d04 Level-0 table #41: 165 bytes OK
-2026/05/09-19:16:53.560 3d04 Recovering log #15
-2026/05/09-19:16:53.560 3d04 Level-0 table #42: started
-2026/05/09-19:16:53.565 3d04 Level-0 table #42: 165 bytes OK
-2026/05/09-19:16:53.565 3d04 Recovering log #22
-2026/05/09-19:16:53.566 3d04 Level-0 table #43: started
-2026/05/09-19:16:53.572 3d04 Level-0 table #43: 212 bytes OK
-2026/05/09-19:16:53.572 3d04 Recovering log #36
-2026/05/09-19:16:53.573 3d04 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.5238ab9e\flutter_tools_chrome_device.cd6635c9\Default\Site Characteristics Database/000036.log 
-2026/05/09-19:16:53.578 3d04 Delete type=0 #3
-2026/05/09-19:16:53.578 3d04 Delete type=2 #4
-2026/05/09-19:16:53.578 3d04 Delete type=0 #6
-2026/05/09-19:16:53.578 3d04 Delete type=2 #7
-2026/05/09-19:16:53.578 3d04 Delete type=2 #8
-2026/05/09-19:16:53.578 3d04 Delete type=0 #10
-2026/05/09-19:16:53.578 3d04 Delete type=0 #15
-2026/05/09-19:16:53.578 3d04 Delete type=2 #16
-2026/05/09-19:16:53.578 3d04 Delete type=0 #22
-2026/05/09-19:16:53.578 3d04 Delete type=2 #23
-2026/05/09-19:16:53.578 3d04 Delete type=2 #29
-2026/05/09-19:16:53.580 3330 Compacting 5@0 + 1@1 files
-2026/05/09-19:16:53.585 3330 Generated table #44@0: 3 keys, 259 bytes
-2026/05/09-19:16:53.585 3330 Compacted 5@0 + 1@1 files => 259 bytes
-2026/05/09-19:16:53.587 3330 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/09-19:16:53.588 3330 Delete type=2 #37
-2026/05/09-19:16:53.588 3330 Delete type=2 #39
-2026/05/09-19:16:53.588 3330 Delete type=2 #40
-2026/05/09-19:16:53.588 3330 Delete type=2 #41
-2026/05/09-19:16:53.588 3330 Delete type=2 #42
-2026/05/09-19:16:53.588 3330 Delete type=2 #43
+2026/05/09-19:30:08.933 19e0 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-19:30:08.934 1eb4 Compacting 14@0 + 0@1 files
+2026/05/09-19:30:09.208 1eb4 Generated table #53@0: 3 keys, 259 bytes
+2026/05/09-19:30:09.209 1eb4 Compacted 14@0 + 0@1 files => 259 bytes
+2026/05/09-19:30:09.271 1eb4 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #4
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #7
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #8
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #16
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #23
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #29
+2026/05/09-19:30:09.272 1eb4 Delete type=2 #37
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #44
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #45
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #46
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #47
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #48
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #49
+2026/05/09-19:30:09.273 1eb4 Delete type=2 #50

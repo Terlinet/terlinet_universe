@@ -1,16 +1,28 @@
-2026/05/09-19:03:05.380 3f9c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.7a10fd91\flutter_tools_chrome_device.4303d972\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/09-19:03:05.381 11e0 Compacting 11@0 + 0@1 files
-2026/05/09-19:03:05.387 11e0 Generated table #37@0: 3 keys, 259 bytes
-2026/05/09-19:03:05.387 11e0 Compacted 11@0 + 0@1 files => 259 bytes
-2026/05/09-19:03:05.389 11e0 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/09-19:03:05.390 11e0 Delete type=2 #4
-2026/05/09-19:03:05.390 11e0 Delete type=2 #7
-2026/05/09-19:03:05.390 11e0 Delete type=2 #8
-2026/05/09-19:03:05.391 11e0 Delete type=2 #16
-2026/05/09-19:03:05.391 11e0 Delete type=2 #23
-2026/05/09-19:03:05.391 11e0 Delete type=2 #29
-2026/05/09-19:03:05.391 11e0 Delete type=2 #30
-2026/05/09-19:03:05.391 11e0 Delete type=2 #31
-2026/05/09-19:03:05.391 11e0 Delete type=2 #32
-2026/05/09-19:03:05.391 11e0 Delete type=2 #33
-2026/05/09-19:03:05.391 11e0 Delete type=2 #34
+2026/05/09-19:30:08.075 19e0 Log #3: 22 ops saved to Table #45 OK
+2026/05/09-19:30:08.094 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000003.log: OK
+2026/05/09-19:30:08.132 19e0 Log #6: 1 ops saved to Table #46 OK
+2026/05/09-19:30:08.134 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000006.log: OK
+2026/05/09-19:30:08.155 19e0 Log #10: 1 ops saved to Table #47 OK
+2026/05/09-19:30:08.158 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000010.log: OK
+2026/05/09-19:30:08.178 19e0 Log #15: 1 ops saved to Table #48 OK
+2026/05/09-19:30:08.181 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000015.log: OK
+2026/05/09-19:30:08.217 19e0 Log #22: 5 ops saved to Table #49 OK
+2026/05/09-19:30:08.220 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000022.log: OK
+2026/05/09-19:30:08.452 19e0 Log #36: 2 ops saved to Table #50 OK
+2026/05/09-19:30:08.453 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/000036.log: OK
+2026/05/09-19:30:08.453 19e0 Table #4: 22 entries OK
+2026/05/09-19:30:08.454 19e0 Table #7: 22 entries OK
+2026/05/09-19:30:08.454 19e0 Table #8: 1 entries OK
+2026/05/09-19:30:08.454 19e0 Table #16: 3 entries OK
+2026/05/09-19:30:08.454 19e0 Table #23: 3 entries OK
+2026/05/09-19:30:08.454 19e0 Table #29: 3 entries OK
+2026/05/09-19:30:08.454 19e0 Table #37: 3 entries OK
+2026/05/09-19:30:08.455 19e0 Table #44: 3 entries OK
+2026/05/09-19:30:08.455 19e0 Table #45: 22 entries OK
+2026/05/09-19:30:08.455 19e0 Table #46: 1 entries OK
+2026/05/09-19:30:08.455 19e0 Table #47: 1 entries OK
+2026/05/09-19:30:08.455 19e0 Table #48: 1 entries OK
+2026/05/09-19:30:08.455 19e0 Table #49: 5 entries OK
+2026/05/09-19:30:08.455 19e0 Table #50: 2 entries OK
+2026/05/09-19:30:08.562 19e0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/05/09-19:30:08.889 19e0 **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database; recovered 14 files; 3983 bytes. Some data may have been lost. ****

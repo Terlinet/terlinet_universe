@@ -886,28 +886,38 @@ class LightsaberPainter extends CustomPainter {
     canvas.translate(x, y);
     canvas.rotate(angle);
 
-    // Cabo do Sabre (Metalizado)
-    final hiltPaint = Paint()..color = const Color(0xFF666666);
+    // Ajuste matemático para centralizar o objeto inteiro no eixo de rotação
+    const double bladeLength = 220.0;
+    const double hiltLength = 35.0;
+    // (bladeLength - hiltLength) / 2 centraliza o sabre horizontalmente
+    const double verticalBalance = (bladeLength - hiltLength) / 2;
+    canvas.translate(0, verticalBalance);
+
+    // Cabo do Sabre (Metalizado com detalhe de botão)
+    final hiltPaint = Paint()..color = const Color(0xFF888888);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(const Rect.fromLTWH(-5, 0, 10, 30), const Radius.circular(2)),
+      RRect.fromRectAndRadius(const Rect.fromLTWH(-6, 0, 12, hiltLength), const Radius.circular(3)),
       hiltPaint
     );
+    canvas.drawCircle(const Offset(0, 10), 3, Paint()..color = Colors.redAccent);
 
-    // Lâmina do Sabre (Efeito Neon)
+    // Lâmina do Sabre (Efeito Neon Realista)
     final color = Colors.redAccent;
-    final bladeRect = const Rect.fromLTWH(-3, -200, 6, 200);
+    final bladeRect = const Rect.fromLTWH(-4, -bladeLength, 8, bladeLength);
 
-    for (int i = 10; i > 0; i -= 2) {
+    // Camadas de Brilho (Glow)
+    for (int i = 15; i > 0; i -= 3) {
       canvas.drawRRect(
-        RRect.fromRectAndRadius(bladeRect, const Radius.circular(6)),
+        RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
         Paint()
-          ..color = color.withOpacity(0.4 / i)
+          ..color = color.withOpacity(0.5 / i)
           ..maskFilter = MaskFilter.blur(BlurStyle.normal, i.toDouble()),
       );
     }
 
+    // Núcleo da Lâmina (Branco)
     canvas.drawRRect(
-      RRect.fromRectAndRadius(bladeRect, const Radius.circular(6)),
+      RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
       Paint()..color = Colors.white,
     );
 
