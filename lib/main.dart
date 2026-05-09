@@ -987,16 +987,16 @@ class FaceAnalysisPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (!isActive || faces.isEmpty) return;
+    if (faces.isEmpty) return;
 
     final paint = Paint()
-      ..color = Colors.blueAccent
-      ..strokeWidth = 2.5
+      ..color = Colors.greenAccent
+      ..strokeWidth = 4.0
       ..strokeCap = StrokeCap.round;
 
     final linePaint = Paint()
-      ..color = Colors.blueAccent.withOpacity(0.4)
-      ..strokeWidth = 0.8;
+      ..color = Colors.greenAccent.withOpacity(0.5)
+      ..strokeWidth = 1.2;
 
     for (var points in faces) {
       // Converte pontos relativos para coordenadas do widget (Efeito Espelho)
@@ -1005,19 +1005,21 @@ class FaceAnalysisPainter extends CustomPainter {
         p.dy * size.height
       )).toList();
 
-      // Desenha as linhas de conexão (Malha de análise digital)
+      // Desenha as linhas de conexão (Malha de análise digital verde)
       for (int i = 0; i < canvasPoints.length; i++) {
         for (int j = i + 1; j < canvasPoints.length; j++) {
           canvas.drawLine(canvasPoints[i], canvasPoints[j], linePaint);
         }
       }
 
-      // Desenha os pontos (Keypoints biométricos)
+      // Desenha os pontos (Keypoints biométricos verdes)
       for (var point in canvasPoints) {
-        canvas.drawCircle(point, 4, paint);
-        // Efeito de brilho pulsante nos pontos
-        canvas.drawCircle(point, 8, paint..color = Colors.blueAccent.withOpacity(0.15));
-        paint.color = Colors.blueAccent;
+        // Ponto central sólido
+        canvas.drawCircle(point, 6, paint);
+        // Aura de brilho verde
+        canvas.drawCircle(point, 12, Paint()
+          ..color = Colors.greenAccent.withOpacity(0.2)
+          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
       }
     }
   }
