@@ -99,8 +99,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   Future<void> _checkServerStatus() async {
     try {
-      final response = await html.window.fetch("https://tertulianoshow-terlinet-universe.hf.space/");
-      if (response.ok) {
+      // Chama o fetch do JS diretamente para evitar erro de tipo no Dart
+      final promise = js_util.callMethod(html.window, 'fetch', [
+        "https://tertulianoshow-terlinet-universe.hf.space/",
+        js_util.jsify({'method': 'GET'})
+      ]);
+      final dynamic response = await js_util.promiseToFuture(promise);
+      final bool ok = js_util.getProperty(response, 'ok') ?? false;
+      if (ok) {
         print("Conexão com servidor TerlineT estabelecida com sucesso.");
       }
     } catch (e) {
@@ -278,9 +284,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     }
 
     try {
-      // Usa fetch nativo via promise do JS para evitar problemas de cast no Dart
-      final dynamic response = await js_util.promiseToFuture(
-        html.window.fetch(_apiUrl, js_util.jsify({
+      // Usa js_util para chamar o window.fetch REAL do navegador
+      // Isso evita o erro de LegacyJavaScriptObject
+      final promise = js_util.callMethod(html.window, 'fetch', [
+        _apiUrl,
+        js_util.jsify({
           'method': 'POST',
           'headers': {
             'Content-Type': 'application/json',
@@ -289,17 +297,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             'text': prompt,
             'is_agent': false,
           }),
-        }))
-      );
+        })
+      ]);
 
-      // Acessa a propriedade 'ok' de forma segura via JS
+      final dynamic response = await js_util.promiseToFuture(promise);
+
       final bool ok = js_util.getProperty(response, 'ok') ?? false;
       if (!ok) {
         final int status = js_util.getProperty(response, 'status') ?? 0;
         throw Exception("Erro no servidor: $status");
       }
 
-      // Lê como texto via promise do JS
+      // Lê o texto da resposta via JS
       final String responseText = await js_util.promiseToFuture(
         js_util.callMethod(response, 'text', [])
       );
@@ -323,7 +332,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       print("DETALHE DO ERRO DE CONEXÃO: $e");
       if (mounted) {
         setState(() {
-          _aiMessage = "Sincronização pendente. Tente enviar uma mensagem de texto.";
+          _aiMessage = "Sincronização pendente. Verifique a conexão com o servidor.";
           _isProcessing = false;
         });
       }
