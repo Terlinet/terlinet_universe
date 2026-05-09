@@ -1,19 +1,52 @@
-2026/05/09-19:30:08.933 19e0 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.c1ae9c88\flutter_tools_chrome_device.55c75033\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/09-19:30:08.934 1eb4 Compacting 14@0 + 0@1 files
-2026/05/09-19:30:09.208 1eb4 Generated table #53@0: 3 keys, 259 bytes
-2026/05/09-19:30:09.209 1eb4 Compacted 14@0 + 0@1 files => 259 bytes
-2026/05/09-19:30:09.271 1eb4 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #4
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #7
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #8
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #16
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #23
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #29
-2026/05/09-19:30:09.272 1eb4 Delete type=2 #37
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #44
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #45
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #46
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #47
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #48
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #49
-2026/05/09-19:30:09.273 1eb4 Delete type=2 #50
+2026/05/09-19:45:53.922 4030 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.436b5453\flutter_tools_chrome_device.3b16e2ea\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-19:45:53.925 4030 Recovering log #3
+2026/05/09-19:45:53.925 4030 Level-0 table #65: started
+2026/05/09-19:45:53.931 4030 Level-0 table #65: 540 bytes OK
+2026/05/09-19:45:53.932 4030 Recovering log #6
+2026/05/09-19:45:53.932 4030 Level-0 table #66: started
+2026/05/09-19:45:53.936 4030 Level-0 table #66: 165 bytes OK
+2026/05/09-19:45:53.937 4030 Recovering log #10
+2026/05/09-19:45:53.937 4030 Level-0 table #67: started
+2026/05/09-19:45:53.942 4030 Level-0 table #67: 165 bytes OK
+2026/05/09-19:45:53.942 4030 Recovering log #15
+2026/05/09-19:45:53.942 4030 Level-0 table #68: started
+2026/05/09-19:45:53.948 4030 Level-0 table #68: 165 bytes OK
+2026/05/09-19:45:53.949 4030 Recovering log #22
+2026/05/09-19:45:53.949 4030 Level-0 table #69: started
+2026/05/09-19:45:53.954 4030 Level-0 table #69: 212 bytes OK
+2026/05/09-19:45:53.954 4030 Recovering log #36
+2026/05/09-19:45:53.954 4030 Level-0 table #70: started
+2026/05/09-19:45:53.959 4030 Level-0 table #70: 196 bytes OK
+2026/05/09-19:45:53.959 4030 Recovering log #52
+2026/05/09-19:45:53.959 4030 Level-0 table #71: started
+2026/05/09-19:45:53.964 4030 Level-0 table #71: 165 bytes OK
+2026/05/09-19:45:53.964 4030 Recovering log #62
+2026/05/09-19:45:53.965 4030 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.436b5453\flutter_tools_chrome_device.3b16e2ea\Default\Site Characteristics Database/000062.log 
+2026/05/09-19:45:53.967 4030 Delete type=0 #3
+2026/05/09-19:45:53.967 4030 Delete type=2 #4
+2026/05/09-19:45:53.967 4030 Delete type=0 #6
+2026/05/09-19:45:53.967 4030 Delete type=2 #7
+2026/05/09-19:45:53.967 4030 Delete type=2 #8
+2026/05/09-19:45:53.967 4030 Delete type=0 #10
+2026/05/09-19:45:53.967 4030 Delete type=0 #15
+2026/05/09-19:45:53.967 4030 Delete type=2 #16
+2026/05/09-19:45:53.967 4030 Delete type=0 #22
+2026/05/09-19:45:53.968 4030 Delete type=2 #23
+2026/05/09-19:45:53.968 4030 Delete type=2 #29
+2026/05/09-19:45:53.968 4030 Delete type=0 #36
+2026/05/09-19:45:53.968 4030 Delete type=2 #37
+2026/05/09-19:45:53.968 4030 Delete type=2 #44
+2026/05/09-19:45:53.968 4030 Delete type=0 #52
+2026/05/09-19:45:53.968 4030 Delete type=2 #53
+2026/05/09-19:45:53.971 42f0 Compacting 7@0 + 1@1 files
+2026/05/09-19:45:53.976 42f0 Generated table #72@0: 3 keys, 259 bytes
+2026/05/09-19:45:53.976 42f0 Compacted 7@0 + 1@1 files => 259 bytes
+2026/05/09-19:45:53.978 42f0 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/09-19:45:53.978 42f0 Delete type=2 #63
+2026/05/09-19:45:53.979 42f0 Delete type=2 #65
+2026/05/09-19:45:53.979 42f0 Delete type=2 #66
+2026/05/09-19:45:53.979 42f0 Delete type=2 #67
+2026/05/09-19:45:53.979 42f0 Delete type=2 #68
+2026/05/09-19:45:53.979 42f0 Delete type=2 #69
+2026/05/09-19:45:53.979 42f0 Delete type=2 #70
+2026/05/09-19:45:53.979 42f0 Delete type=2 #71

@@ -49,7 +49,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Timer? _detectionTimer;
   String _aiMessage = "Iniciando protocolos de inteligência...";
   bool _isAiTalking = false;
-  bool _isProcessing = false;
+  bool _isProcessing = false; // API interaction processing
+  bool _isFaceProcessing = false; // MediaPipe Face processing
+  bool _isHandsProcessing = false; // MediaPipe Hands processing
   bool _hasCamera = true;
   bool _isIaReady = false;
   List<Offset> _facePoints = [];
@@ -351,14 +353,34 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         if (_cameraVideoElement.readyState >= 2) {
           final imageSource = js_util.jsify({'image': _cameraVideoElement});
 
-          // Envia para Face Detection
-          if (_faceDetection != null) {
-            js_util.callMethod(_faceDetection, 'send', [imageSource]);
+          // Envia para Face Detection (com trava para evitar memory access out of bounds)
+          if (_faceDetection != null && !_isFaceProcessing) {
+            _isFaceProcessing = true;
+            try {
+              final promise = js_util.callMethod(_faceDetection, 'send', [imageSource]);
+              if (promise != null) {
+                await js_util.promiseToFuture(promise);
+              }
+            } catch (e) {
+              print("Erro Face send: $e");
+            } finally {
+              _isFaceProcessing = false;
+            }
           }
 
-          // Envia para Hand Tracking
-          if (_hands != null) {
-            js_util.callMethod(_hands, 'send', [imageSource]);
+          // Envia para Hand Tracking (com trava independente)
+          if (_hands != null && !_isHandsProcessing) {
+            _isHandsProcessing = true;
+            try {
+              final promise = js_util.callMethod(_hands, 'send', [imageSource]);
+              if (promise != null) {
+                await js_util.promiseToFuture(promise);
+              }
+            } catch (e) {
+              print("Erro Hands send: $e");
+            } finally {
+              _isHandsProcessing = false;
+            }
           }
         }
       });
@@ -632,7 +654,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 ),
                 if (_isUserLooking)
                   Text(
-                    "IDENTIDADE RECONHECIDA",
+                    "CONEXÃO ESTABELECIDA",
                     style: TextStyle(
                       color: Colors.blueAccent,
                       fontSize: 9,
@@ -647,7 +669,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       _startCamera();
                     },
                     child: Text(
-                      _isIaReady ? "EM STANDBY" : "REINICIAR IA",
+                      _isIaReady ? "MODO VIGILÂNCIA" : "SINCRONIZAR SENSOR",
                       style: TextStyle(
                         color: _isIaReady ? Colors.white24 : Colors.orangeAccent,
                         fontSize: 9,
