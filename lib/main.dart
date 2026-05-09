@@ -163,12 +163,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   }
 
   void _initFaceIA() {
+    // Evita múltiplas inicializações
+    if (_faceDetection != null) return;
+
     try {
       final faceClass = js_util.getProperty(html.window, 'FaceDetection');
-      if (faceClass == null) return;
+      if (faceClass == null) {
+        Future.delayed(const Duration(seconds: 1), _initFaceIA);
+        return;
+      }
 
       final options = js_util.newObject();
       js_util.setProperty(options, 'locateFile', allowInterop((file, base) {
+        // Usa a CDN oficial estável
         return 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/$file';
       }));
       
@@ -181,31 +188,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         })
       ]);
 
-      setState(() {
-        _isIaReady = true;
-        if (_hasCamera) {
-          _aiMessage = "Sistemas prontos. Olhe para a tela para iniciar.";
-        }
-      });
-
-      DateTime lastProcessTime = DateTime.now();
-
       js_util.callMethod(_faceDetection, 'onResults', [
         allowInterop((results) {
-          if (!mounted) return;
-          
-          final now = DateTime.now();
-          if (now.difference(lastProcessTime).inMilliseconds < 100) return;
-          lastProcessTime = now;
+          if (!mounted || results == null) return;
 
           try {
-            if (results == null) return;
-            
             final detections = js_util.getProperty(results, 'detections');
-            if (detections == null) return;
-            
-            final int len = js_util.getProperty(detections, 'length') ?? 0;
-            bool found = len > 0;
+            bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
             
             List<Offset> points = [];
             if (found) {
@@ -236,6 +225,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             if (mounted) {
               setState(() {
                 _facePoints = points;
+                _isIaReady = true; // IA confirmou que está processando
                 if (found != _isUserLooking) {
                   _isUserLooking = found;
                   if (_isUserLooking && !_isProcessing) {
@@ -244,11 +234,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 }
               });
             }
-          } catch (e) {}
+          } catch (e) {
+            // Silencia erros de processamento de frame
+          }
         })
       ]);
     } catch (e) {
-      print('Erro fatal ao iniciar IA: $e');
+      print('Aguardando disponibilidade do motor de IA...');
+      Future.delayed(const Duration(seconds: 2), _initFaceIA);
     }
   }
 
@@ -260,11 +253,24 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         ..autoplay = true
         ..muted = true;
 
-      _detectionTimer = Timer.periodic(const Duration(milliseconds: 150), (timer) async {
-        if (_cameraVideoElement.readyState >= 4 && _faceDetection != null) {
-          await js_util.promiseToFuture(
-            js_util.callMethod(_faceDetection, 'send', [js_util.jsify({'image': _cameraVideoElement})])
-          );
+      // Espera um pouco mais para a câmera estabilizar
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      _detectionTimer = Timer.periodic(const Duration(milliseconds: 200), (timer) async {
+        if (!mounted) return;
+
+        // Só tenta enviar se o vídeo e a IA estiverem minimamente prontos
+        if (_cameraVideoElement.readyState >= 2 && _faceDetection != null) {
+          try {
+            final promise = js_util.callMethod(_faceDetection, 'send', [
+              js_util.jsify({'image': _cameraVideoElement})
+            ]);
+            if (promise != null) {
+              await js_util.promiseToFuture(promise);
+            }
+          } catch (e) {
+            // Captura o erro 'still waiting on run dependencies' sem travar o app
+          }
         }
       });
       if (mounted) setState(() => _hasCamera = true);
@@ -272,7 +278,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       if (mounted) {
         setState(() {
           _hasCamera = false;
-          _aiMessage = "Câmera indisponível. Utilize texto ou voz para interagir.";
+          _aiMessage = "Sensor visual desativado. Interaja via texto ou voz.";
         });
       }
     }

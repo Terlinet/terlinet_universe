@@ -1,1 +1,11 @@
-2026/05/09-12:22:03.345 2df0 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.e8281a0e\flutter_tools_chrome_device.f52106ff\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-12:55:17.183 15dc Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-12:55:17.184 24cc Compacting 6@0 + 0@1 files
+2026/05/09-12:55:17.189 24cc Generated table #16@0: 3 keys, 259 bytes
+2026/05/09-12:55:17.190 24cc Compacted 6@0 + 0@1 files => 259 bytes
+2026/05/09-12:55:17.193 24cc compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/09-12:55:17.194 24cc Delete type=2 #4
+2026/05/09-12:55:17.194 24cc Delete type=2 #7
+2026/05/09-12:55:17.194 24cc Delete type=2 #8
+2026/05/09-12:55:17.195 24cc Delete type=2 #11
+2026/05/09-12:55:17.195 24cc Delete type=2 #12
+2026/05/09-12:55:17.195 24cc Delete type=2 #13
