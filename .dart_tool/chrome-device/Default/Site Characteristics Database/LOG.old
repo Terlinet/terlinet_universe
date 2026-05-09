@@ -1,14 +1,12 @@
-2026/05/09-12:55:17.149 15dc Log #3: 22 ops saved to Table #11 OK
-2026/05/09-12:55:17.154 15dc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database/000003.log: OK
-2026/05/09-12:55:17.160 15dc Log #6: 1 ops saved to Table #12 OK
-2026/05/09-12:55:17.162 15dc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database/000006.log: OK
-2026/05/09-12:55:17.167 15dc Log #10: 1 ops saved to Table #13 OK
-2026/05/09-12:55:17.168 15dc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database/000010.log: OK
-2026/05/09-12:55:17.169 15dc Table #4: 22 entries OK
-2026/05/09-12:55:17.169 15dc Table #7: 22 entries OK
-2026/05/09-12:55:17.169 15dc Table #8: 1 entries OK
-2026/05/09-12:55:17.169 15dc Table #11: 22 entries OK
-2026/05/09-12:55:17.169 15dc Table #12: 1 entries OK
-2026/05/09-12:55:17.170 15dc Table #13: 1 entries OK
-2026/05/09-12:55:17.173 15dc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database/MANIFEST-000001: OK
-2026/05/09-12:55:17.180 15dc **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.f71e9ecf\flutter_tools_chrome_device.1c08f735\Default\Site Characteristics Database; recovered 6 files; 2115 bytes. Some data may have been lost. ****
+2026/05/09-18:49:30.502 2ea8 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.756044e8\flutter_tools_chrome_device.ac4aedd3\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-18:49:30.505 2ea8 Recovering log #22
+2026/05/09-18:49:30.505 2ea8 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.756044e8\flutter_tools_chrome_device.ac4aedd3\Default\Site Characteristics Database/000022.log 
+2026/05/09-18:49:30.506 2ea8 Delete type=0 #3
+2026/05/09-18:49:30.506 2ea8 Delete type=2 #4
+2026/05/09-18:49:30.506 2ea8 Delete type=0 #6
+2026/05/09-18:49:30.506 2ea8 Delete type=2 #7
+2026/05/09-18:49:30.506 2ea8 Delete type=2 #8
+2026/05/09-18:49:30.506 2ea8 Delete type=0 #10
+2026/05/09-18:49:30.506 2ea8 Delete type=0 #15
+2026/05/09-18:49:30.507 2ea8 Delete type=2 #16
+2026/05/09-18:49:30.507 2ea8 Delete type=2 #23

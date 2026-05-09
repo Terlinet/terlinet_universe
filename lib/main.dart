@@ -45,6 +45,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   final html.VideoElement _cameraVideoElement = html.VideoElement();
   bool _isUserLooking = false;
   dynamic _faceDetection;
+  dynamic _hands; // MediaPipe Hands
   Timer? _detectionTimer;
   String _aiMessage = "Iniciando protocolos de inteligência...";
   bool _isAiTalking = false;
@@ -52,6 +53,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _hasCamera = true;
   bool _isIaReady = false;
   List<Offset> _facePoints = [];
+  String? _duelGifBase64;
+  bool _isLoadingDuel = false;
+
+  // Variáveis do Sabre de Luz
+  Offset _handPos = const Offset(0.5, 0.8); // Posição normalizada (0.0 a 1.0)
+  double _saberAngle = 0.0;
+  bool _isHandVisible = false;
 
   // Controllers para entrada do usuário
   final TextEditingController _textController = TextEditingController();
@@ -91,9 +99,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     );
 
     _initFaceIA();
+    _initHandsIA(); // Inicializa rastreio de mãos
     _startCamera();
     _initSpeechRecognition();
-    
+    _loadDuelAnimation(); // Carrega a luta de Padawans
+
     // Testa a conexão ao iniciar
     _checkServerStatus();
   }
@@ -159,6 +169,62 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     } else {
       setState(() => _isListening = true);
       js_util.callMethod(_recognition, 'start', []);
+    }
+  }
+
+  void _initHandsIA() {
+    try {
+      final handsClass = js_util.getProperty(html.window, 'Hands');
+      if (handsClass == null) return;
+
+      final options = js_util.newObject();
+      js_util.setProperty(options, 'locateFile', allowInterop((file, base) =>
+        'https://cdn.jsdelivr.net/npm/@mediapipe/hands/$file'));
+
+      _hands = js_util.callConstructor(handsClass, [options]);
+
+      js_util.callMethod(_hands, 'setOptions', [
+        js_util.jsify({
+          'maxNumHands': 1,
+          'modelComplexity': 1,
+          'minDetectionConfidence': 0.5,
+          'minTrackingConfidence': 0.5
+        })
+      ]);
+
+      js_util.callMethod(_hands, 'onResults', [
+        allowInterop((results) {
+          if (!mounted || results == null) return;
+          final multiHandLandmarks = js_util.getProperty(results, 'multiHandLandmarks');
+
+          if (multiHandLandmarks != null && js_util.getProperty(multiHandLandmarks, 'length') > 0) {
+            final landmarks = js_util.getProperty(multiHandLandmarks, 0);
+
+            // Pega o pulso (0) e o dedo médio (12) para calcular ângulo e posição
+            final wrist = js_util.getProperty(landmarks, 0);
+            final middleFinger = js_util.getProperty(landmarks, 12);
+
+            if (mounted) {
+              setState(() {
+                _isHandVisible = true;
+                _handPos = Offset(
+                  js_util.getProperty(wrist, 'x'),
+                  js_util.getProperty(wrist, 'y')
+                );
+
+                // Calcula ângulo do sabre baseado na inclinação da mão
+                double dx = js_util.getProperty(middleFinger, 'x') - js_util.getProperty(wrist, 'x');
+                double dy = js_util.getProperty(middleFinger, 'y') - js_util.getProperty(wrist, 'y');
+                _saberAngle = math.atan2(dy, dx) + (math.pi / 2);
+              });
+            }
+          } else {
+            if (mounted && _isHandVisible) setState(() => _isHandVisible = false);
+          }
+        })
+      ]);
+    } catch (e) {
+      print('Erro ao iniciar IA de mãos: $e');
     }
   }
 
@@ -270,20 +336,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       // Espera um pouco mais para a câmera estabilizar
       await Future.delayed(const Duration(milliseconds: 500));
 
-      _detectionTimer = Timer.periodic(const Duration(milliseconds: 200), (timer) async {
+      _detectionTimer = Timer.periodic(const Duration(milliseconds: 100), (timer) async {
         if (!mounted) return;
 
-        // Só tenta enviar se o vídeo e a IA estiverem minimamente prontos
-        if (_cameraVideoElement.readyState >= 2 && _faceDetection != null) {
-          try {
-            final promise = js_util.callMethod(_faceDetection, 'send', [
-              js_util.jsify({'image': _cameraVideoElement})
-            ]);
-            if (promise != null) {
-              await js_util.promiseToFuture(promise);
-            }
-          } catch (e) {
-            // Captura o erro 'still waiting on run dependencies' sem travar o app
+        if (_cameraVideoElement.readyState >= 2) {
+          final imageSource = js_util.jsify({'image': _cameraVideoElement});
+
+          // Envia para Face Detection
+          if (_faceDetection != null) {
+            js_util.callMethod(_faceDetection, 'send', [imageSource]);
+          }
+
+          // Envia para Hand Tracking
+          if (_hands != null) {
+            js_util.callMethod(_hands, 'send', [imageSource]);
           }
         }
       });
@@ -295,6 +361,29 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           _aiMessage = "Sensor visual desativado. Interaja via texto ou voz.";
         });
       }
+    }
+  }
+
+  Future<void> _loadDuelAnimation() async {
+    setState(() => _isLoadingDuel = true);
+    try {
+      final promise = js_util.callMethod(html.window, 'fetch', [
+        "https://tertulianoshow-terlinet-universe.hf.space/generate_duel",
+        js_util.jsify({'method': 'GET'})
+      ]);
+      final dynamic response = await js_util.promiseToFuture(promise);
+      final String responseText = await js_util.promiseToFuture(js_util.callMethod(response, 'text', []));
+      final Map<String, dynamic> data = jsonDecode(responseText);
+
+      if (mounted) {
+        setState(() {
+          _duelGifBase64 = data['gif'];
+          _isLoadingDuel = false;
+        });
+      }
+    } catch (e) {
+      print("Erro ao carregar duelo: $e");
+      if (mounted) setState(() => _isLoadingDuel = false);
     }
   }
 
@@ -420,6 +509,60 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ),
 
           // HUD de Visão de IA (Canto superior) - Mostra apenas os pontos de detecção
+          Positioned(
+            left: 30,
+            top: 30,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 150,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.blueAccent.withOpacity(0.3)),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Stack(
+                      children: [
+                        if (_duelGifBase64 != null)
+                          Image.memory(
+                            base64Decode(_duelGifBase64!),
+                            fit: BoxFit.contain,
+                            width: 150,
+                            height: 120,
+                          )
+                        else
+                          const Center(
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          ),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          color: Colors.black26,
+                          child: const Text(
+                            "HOLOGRAMA: SETOR 7",
+                            style: TextStyle(color: Colors.blueAccent, fontSize: 7, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                GestureDetector(
+                  onTap: _loadDuelAnimation,
+                  child: Text(
+                    "REINICIAR SIMULAÇÃO",
+                    style: TextStyle(color: Colors.blueAccent.withOpacity(0.5), fontSize: 8, decoration: TextDecoration.underline),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // HUD de Visão de IA (Canto superior direito)
           Positioned(
             right: 30,
             top: 30,
@@ -680,10 +823,72 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               ),
             ),
           ),
+
+          // SABRE DE LUZ INTERATIVO
+          if (_isHandVisible)
+            Positioned.fill(
+              child: CustomPaint(
+                painter: LightsaberPainter(
+                  pos: _handPos,
+                  angle: _saberAngle,
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
+}
+
+class LightsaberPainter extends CustomPainter {
+  final Offset pos;
+  final double angle;
+
+  LightsaberPainter({required this.pos, required this.angle});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Converte posição normalizada (invertida para efeito espelho) para pixel
+    final x = (1.0 - pos.dx) * size.width;
+    final y = pos.dy * size.height;
+
+    canvas.save();
+    canvas.translate(x, y);
+    canvas.rotate(angle);
+
+    // Cabo do Sabre (Metalizado)
+    final hiltPaint = Paint()..color = const Color(0xFF444444);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(const Rect.fromLTWH(-6, 0, 12, 40), const Radius.circular(3)),
+      hiltPaint
+    );
+
+    // Lâmina do Sabre (Efeito Neon)
+    final color = Colors.redAccent; // Sabre Sith para impacto visual
+    final bladeRect = const Rect.fromLTWH(-4, -280, 8, 280);
+
+    // Camadas de Glow (Brilho)
+    for (int i = 12; i > 0; i -= 2) {
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
+        Paint()
+          ..color = color.withOpacity(0.3 / i)
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, i.toDouble()),
+      );
+    }
+
+    // Núcleo da Lâmina (Branco)
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
+      Paint()..color = Colors.white,
+    );
+
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant LightsaberPainter oldDelegate) =>
+    oldDelegate.pos != pos || oldDelegate.angle != angle;
 }
 
 class Particle {
