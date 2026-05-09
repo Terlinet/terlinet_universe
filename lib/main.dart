@@ -162,25 +162,39 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     }
   }
 
-  void _initFaceIA() {
-    // Evita múltiplas inicializações
+  void _initFaceIA({int attempt = 0}) {
     if (_faceDetection != null) return;
 
     try {
       final faceClass = js_util.getProperty(html.window, 'FaceDetection');
       if (faceClass == null) {
-        Future.delayed(const Duration(seconds: 1), _initFaceIA);
+        if (attempt < 20) { // Tenta por ~10 segundos
+          Future.delayed(const Duration(milliseconds: 500), () => _initFaceIA(attempt: attempt + 1));
+        } else {
+          print("FaceDetection não disponível após várias tentativas.");
+          if (mounted) {
+            setState(() {
+              _aiMessage = "Sensor facial indisponível. Use texto/voz.";
+              _hasCamera = false;
+            });
+          }
+        }
         return;
       }
 
       final options = js_util.newObject();
       js_util.setProperty(options, 'locateFile', allowInterop((file, base) {
-        // Usa a CDN oficial estável
         return 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/$file';
       }));
       
       _faceDetection = js_util.callConstructor(faceClass, [options]);
       
+      // Tratamento de erros do MediaPipe
+      js_util.setProperty(_faceDetection, 'onError', allowInterop((err) {
+        print("MediaPipe FaceDetection error: $err");
+        if (mounted) setState(() => _hasCamera = false);
+      }));
+
       js_util.callMethod(_faceDetection, 'setOptions', [
         js_util.jsify({
           'model': 'short',
@@ -225,7 +239,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             if (mounted) {
               setState(() {
                 _facePoints = points;
-                _isIaReady = true; // IA confirmou que está processando
+                _isIaReady = true;
                 if (found != _isUserLooking) {
                   _isUserLooking = found;
                   if (_isUserLooking && !_isProcessing) {
@@ -240,8 +254,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         })
       ]);
     } catch (e) {
-      print('Aguardando disponibilidade do motor de IA...');
-      Future.delayed(const Duration(seconds: 2), _initFaceIA);
+      print('Erro ao iniciar IA: $e');
+      Future.delayed(const Duration(seconds: 2), () => _initFaceIA(attempt: attempt + 1));
     }
   }
 
