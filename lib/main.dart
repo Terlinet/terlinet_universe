@@ -732,6 +732,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       fontWeight: FontWeight.w300,
                     ),
                   ),
+
+                  // SABRE DE LUZ INTERATIVO (Agora ancorado abaixo do logo)
+                  const SizedBox(height: 30),
+                  SizedBox(
+                    width: 400,
+                    height: 60,
+                    child: CustomPaint(
+                      painter: LightsaberPainter(
+                        pos: _isHandDetected ? _handPos : const Offset(0.5, 0.5),
+                        angle: _isHandDetected ? _saberAngle : math.pi / 2,
+                        isFixed: !_isHandDetected,
+                      ),
+                    ),
+                  ),
                   
                   // Mensagem Dinâmica da IA (Servidor HuggingFace)
                   const SizedBox(height: 40),
@@ -841,18 +855,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             ),
           ),
 
-          // SABRE DE LUZ INTERATIVO
-          if (_isHandVisible)
-            IgnorePointer(
-              child: Positioned.fill(
-                child: CustomPaint(
-                  painter: LightsaberPainter(
-                    pos: _handPos,
-                    angle: _saberAngle,
-                  ),
-                ),
-              ),
-            ),
+          // Remover o sabre flutuante que bloqueava a tela
         ],
       ),
     );
@@ -862,43 +865,49 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 class LightsaberPainter extends CustomPainter {
   final Offset pos;
   final double angle;
+  final bool isFixed;
 
-  LightsaberPainter({required this.pos, required this.angle});
+  LightsaberPainter({required this.pos, required this.angle, required this.isFixed});
 
   @override
   void paint(Canvas canvas, Size size) {
-    // Converte posição normalizada (invertida para efeito espelho) para pixel
-    final x = (1.0 - pos.dx) * size.width;
-    final y = pos.dy * size.height;
+    double x, y;
+
+    if (isFixed) {
+      x = size.width / 2;
+      y = size.height / 2;
+    } else {
+      // Quando interativo, permite um leve deslocamento dentro da área
+      x = (1.0 - pos.dx) * size.width;
+      y = pos.dy * size.height;
+    }
 
     canvas.save();
     canvas.translate(x, y);
     canvas.rotate(angle);
 
     // Cabo do Sabre (Metalizado)
-    final hiltPaint = Paint()..color = const Color(0xFF444444);
+    final hiltPaint = Paint()..color = const Color(0xFF666666);
     canvas.drawRRect(
-      RRect.fromRectAndRadius(const Rect.fromLTWH(-6, 0, 12, 40), const Radius.circular(3)),
+      RRect.fromRectAndRadius(const Rect.fromLTWH(-5, 0, 10, 30), const Radius.circular(2)),
       hiltPaint
     );
 
     // Lâmina do Sabre (Efeito Neon)
-    final color = Colors.redAccent; // Sabre Sith para impacto visual
-    final bladeRect = const Rect.fromLTWH(-4, -280, 8, 280);
+    final color = Colors.redAccent;
+    final bladeRect = const Rect.fromLTWH(-3, -200, 6, 200);
 
-    // Camadas de Glow (Brilho)
-    for (int i = 12; i > 0; i -= 2) {
+    for (int i = 10; i > 0; i -= 2) {
       canvas.drawRRect(
-        RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
+        RRect.fromRectAndRadius(bladeRect, const Radius.circular(6)),
         Paint()
-          ..color = color.withOpacity(0.3 / i)
+          ..color = color.withOpacity(0.4 / i)
           ..maskFilter = MaskFilter.blur(BlurStyle.normal, i.toDouble()),
       );
     }
 
-    // Núcleo da Lâmina (Branco)
     canvas.drawRRect(
-      RRect.fromRectAndRadius(bladeRect, const Radius.circular(8)),
+      RRect.fromRectAndRadius(bladeRect, const Radius.circular(6)),
       Paint()..color = Colors.white,
     );
 
@@ -906,8 +915,7 @@ class LightsaberPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant LightsaberPainter oldDelegate) =>
-    oldDelegate.pos != pos || oldDelegate.angle != angle;
+  bool shouldRepaint(covariant LightsaberPainter oldDelegate) => true;
 }
 
 class Particle {
