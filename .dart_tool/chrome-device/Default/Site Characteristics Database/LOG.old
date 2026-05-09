@@ -1,5 +1,9 @@
-2026/05/09-12:16:01.596 ebc Log #3: 22 ops saved to Table #4 OK
-2026/05/09-12:16:01.601 ebc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.26cb32c7\flutter_tools_chrome_device.62bc909f\Default\Site Characteristics Database/000003.log: OK
-2026/05/09-12:16:01.601 ebc Table #4: 22 entries OK
-2026/05/09-12:16:01.603 ebc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.26cb32c7\flutter_tools_chrome_device.62bc909f\Default\Site Characteristics Database/MANIFEST-000001: OK
-2026/05/09-12:16:01.612 ebc **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.26cb32c7\flutter_tools_chrome_device.62bc909f\Default\Site Characteristics Database; recovered 1 files; 540 bytes. Some data may have been lost. ****
+2026/05/09-12:22:03.319 2df0 Log #3: 22 ops saved to Table #7 OK
+2026/05/09-12:22:03.323 2df0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.e8281a0e\flutter_tools_chrome_device.f52106ff\Default\Site Characteristics Database/000003.log: OK
+2026/05/09-12:22:03.330 2df0 Log #6: 1 ops saved to Table #8 OK
+2026/05/09-12:22:03.331 2df0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.e8281a0e\flutter_tools_chrome_device.f52106ff\Default\Site Characteristics Database/000006.log: OK
+2026/05/09-12:22:03.331 2df0 Table #4: 22 entries OK
+2026/05/09-12:22:03.331 2df0 Table #7: 22 entries OK
+2026/05/09-12:22:03.331 2df0 Table #8: 1 entries OK
+2026/05/09-12:22:03.334 2df0 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.e8281a0e\flutter_tools_chrome_device.f52106ff\Default\Site Characteristics Database/MANIFEST-000001: OK
+2026/05/09-12:22:03.342 2df0 **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.e8281a0e\flutter_tools_chrome_device.f52106ff\Default\Site Characteristics Database; recovered 3 files; 1245 bytes. Some data may have been lost. ****

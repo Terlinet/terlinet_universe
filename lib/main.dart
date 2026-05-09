@@ -46,11 +46,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _isUserLooking = false;
   dynamic _faceDetection;
   Timer? _detectionTimer;
-  String _aiMessage = "Sistemas prontos. Olhe para a tela ou digite algo para iniciar.";
+  String _aiMessage = "Iniciando protocolos de inteligência...";
   bool _isAiTalking = false;
   bool _isProcessing = false;
   bool _hasCamera = true;
-  List<Offset> _facePoints = []; // Armazena os pontos de detecção
+  bool _isIaReady = false;
+  List<Offset> _facePoints = [];
 
   // Controllers para entrada do usuário
   final TextEditingController _textController = TextEditingController();
@@ -167,8 +168,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       if (faceClass == null) return;
 
       final options = js_util.newObject();
-      js_util.setProperty(options, 'locateFile', allowInterop((file, base) => 
-        'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/$file'));
+      js_util.setProperty(options, 'locateFile', allowInterop((file, base) {
+        return 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/$file';
+      }));
       
       _faceDetection = js_util.callConstructor(faceClass, [options]);
       
@@ -178,6 +180,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           'minDetectionConfidence': 0.6
         })
       ]);
+
+      setState(() {
+        _isIaReady = true;
+        if (_hasCamera) {
+          _aiMessage = "Sistemas prontos. Olhe para a tela para iniciar.";
+        }
+      });
 
       DateTime lastProcessTime = DateTime.now();
 
@@ -343,9 +352,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     try {
       final uri = 'data:audio/mp3;base64,$base64Audio';
       final audio = html.AudioElement(uri);
-      audio.play();
+
+      // Captura a promessa do play() para evitar erro no console
+      final dynamic playPromise = js_util.callMethod(audio, 'play', []);
+
+      if (playPromise != null) {
+        js_util.promiseToFuture(playPromise).catchError((e) {
+          print("Navegador bloqueou áudio automático. Clique na tela para liberar.");
+          // Se falhou, podemos tentar novamente após um clique global
+        });
+      }
     } catch (e) {
-      print("Erro ao reproduzir voz: $e");
+      print("Erro ao processar áudio: $e");
     }
   }
 
@@ -432,16 +450,33 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  _isUserLooking ? "IDENTIDADE RECONHECIDA" : "EM STANDBY",
-                  style: TextStyle(
-                    color: _isUserLooking ? Colors.blueAccent : Colors.white24,
-                    fontSize: 9,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5,
+                if (_isUserLooking)
+                  Text(
+                    "IDENTIDADE RECONHECIDA",
+                    style: TextStyle(
+                      color: Colors.blueAccent,
+                      fontSize: 9,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.5,
+                    ),
+                  )
+                else
+                  GestureDetector(
+                    onTap: () {
+                      _initFaceIA();
+                      _startCamera();
+                    },
+                    child: Text(
+                      _isIaReady ? "EM STANDBY" : "REINICIAR IA",
+                      style: TextStyle(
+                        color: _isIaReady ? Colors.white24 : Colors.orangeAccent,
+                        fontSize: 9,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                        decoration: _isIaReady ? null : TextDecoration.underline,
+                      ),
+                    ),
                   ),
-                ),
               ],
             ),
           ),
