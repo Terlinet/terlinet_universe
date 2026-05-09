@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _isHandsProcessing = false; // MediaPipe Hands processing
   bool _hasCamera = true;
   bool _isIaReady = false;
-  List<Offset> _facePoints = [];
+  List<List<Offset>> _detectedFaces = []; // Lista de listas para múltiplos rostos
   String? _duelGifBase64;
   bool _isLoadingDuel = false;
 
@@ -285,16 +285,23 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
           try {
             final detections = js_util.getProperty(results, 'detections');
-            bool found = detections != null && js_util.getProperty(detections, 'length') > 0;
+            if (detections == null) {
+              if (mounted) setState(() { _detectedFaces = []; _isUserLooking = false; });
+              return;
+            }
             
-            List<Offset> points = [];
-            if (found) {
-              final firstDetection = js_util.getProperty(detections, 0);
-              if (firstDetection != null) {
-                final locationData = js_util.getProperty(firstDetection, 'locationData');
+            final int len = js_util.getProperty(detections, 'length') ?? 0;
+            bool found = len > 0;
+
+            List<List<Offset>> allFaces = [];
+            for (int d = 0; d < len; d++) {
+              final detection = js_util.getProperty(detections, d);
+              if (detection != null) {
+                final locationData = js_util.getProperty(detection, 'locationData');
                 if (locationData != null) {
                   final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
                   if (keypoints != null) {
+                    List<Offset> facePoints = [];
                     final int kpLen = js_util.getProperty(keypoints, 'length') ?? 0;
                     for (int i = 0; i < kpLen; i++) {
                       final kp = js_util.getProperty(keypoints, i);
@@ -303,11 +310,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           double? x = js_util.getProperty(kp, 'x')?.toDouble();
                           double? y = js_util.getProperty(kp, 'y')?.toDouble();
                           if (x != null && y != null) {
-                            points.add(Offset(x, y));
+                            facePoints.add(Offset(x, y));
                           }
                         } catch (_) {}
                       }
                     }
+                    allFaces.add(facePoints);
                   }
                 }
               }
@@ -315,7 +323,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
             if (mounted) {
               setState(() {
-                _facePoints = points;
+                _detectedFaces = allFaces;
                 _isIaReady = true;
                 if (found != _isUserLooking) {
                   _isUserLooking = found;
@@ -601,65 +609,33 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             ),
           ),
 
-          // HUD de Visão de IA (Canto superior direito)
+          // VISÃO DE IA EM TELA CHEIA (Efeito Espelho)
+          Positioned.fill(
+            child: IgnorePointer(
+              child: CustomPaint(
+                painter: FaceAnalysisPainter(
+                  faces: _detectedFaces,
+                  isActive: _isIaReady,
+                ),
+              ),
+            ),
+          ),
+
+          // HUD de Status (Canto superior direito)
           Positioned(
             right: 30,
             top: 30,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(
-                      color: _isUserLooking ? Colors.blueAccent : Colors.white10,
-                      width: 1.5,
-                    ),
-                    boxShadow: _isUserLooking ? [
-                      BoxShadow(
-                        color: Colors.blue.withOpacity(0.1),
-                        blurRadius: 15,
-                      )
-                    ] : [],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Stack(
-                      children: [
-                        if (!_isUserLooking)
-                          const Center(
-                            child: Text(
-                              "SCANNING",
-                              style: TextStyle(
-                                color: Colors.white10,
-                                fontSize: 8,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        CustomPaint(
-                          painter: FaceAnalysisPainter(
-                            points: _facePoints,
-                            isActive: _isUserLooking,
-                          ),
-                          child: Container(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
                 if (_isUserLooking)
-                  Text(
-                    "CONEXÃO ESTABELECIDA",
+                  const Text(
+                    "SISTEMAS CONECTADOS",
                     style: TextStyle(
                       color: Colors.blueAccent,
-                      fontSize: 9,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5,
+                      letterSpacing: 2.0,
                     ),
                   )
                 else
@@ -669,10 +645,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       _startCamera();
                     },
                     child: Text(
-                      _isIaReady ? "MODO VIGILÂNCIA" : "SINCRONIZAR SENSOR",
+                      _isIaReady ? "AGUARDANDO USUÁRIO" : "SINCRONIZAR SENSOR",
                       style: TextStyle(
                         color: _isIaReady ? Colors.white24 : Colors.orangeAccent,
-                        fontSize: 9,
+                        fontSize: 10,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.5,
                         decoration: _isIaReady ? null : TextDecoration.underline,
@@ -1004,43 +980,45 @@ class _PulseAnimationState extends State<_PulseAnimation> with SingleTickerProvi
 }
 
 class FaceAnalysisPainter extends CustomPainter {
-  final List<Offset> points;
+  final List<List<Offset>> faces;
   final bool isActive;
 
-  FaceAnalysisPainter({required this.points, required this.isActive});
+  FaceAnalysisPainter({required this.faces, required this.isActive});
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (!isActive || points.isEmpty) return;
+    if (!isActive || faces.isEmpty) return;
 
     final paint = Paint()
       ..color = Colors.blueAccent
-      ..strokeWidth = 2.0
+      ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round;
 
     final linePaint = Paint()
-      ..color = Colors.blueAccent.withOpacity(0.3)
-      ..strokeWidth = 0.5;
+      ..color = Colors.blueAccent.withOpacity(0.4)
+      ..strokeWidth = 0.8;
 
-    // Converte pontos relativos para coordenadas do widget
-    List<Offset> canvasPoints = points.map((p) => Offset(
-      (1 - p.dx) * size.width, // Inverte X para efeito espelho
-      p.dy * size.height
-    )).toList();
+    for (var points in faces) {
+      // Converte pontos relativos para coordenadas do widget (Efeito Espelho)
+      List<Offset> canvasPoints = points.map((p) => Offset(
+        (1 - p.dx) * size.width,
+        p.dy * size.height
+      )).toList();
 
-    // Desenha as linhas de conexão (Malha de análise)
-    for (int i = 0; i < canvasPoints.length; i++) {
-      for (int j = i + 1; j < canvasPoints.length; j++) {
-        canvas.drawLine(canvasPoints[i], canvasPoints[j], linePaint);
+      // Desenha as linhas de conexão (Malha de análise digital)
+      for (int i = 0; i < canvasPoints.length; i++) {
+        for (int j = i + 1; j < canvasPoints.length; j++) {
+          canvas.drawLine(canvasPoints[i], canvasPoints[j], linePaint);
+        }
       }
-    }
 
-    // Desenha os pontos (Keypoints)
-    for (var point in canvasPoints) {
-      canvas.drawCircle(point, 3, paint);
-      // Brilho externo nos pontos
-      canvas.drawCircle(point, 6, paint..color = Colors.blueAccent.withOpacity(0.2));
-      paint.color = Colors.blueAccent; // Restaura cor
+      // Desenha os pontos (Keypoints biométricos)
+      for (var point in canvasPoints) {
+        canvas.drawCircle(point, 4, paint);
+        // Efeito de brilho pulsante nos pontos
+        canvas.drawCircle(point, 8, paint..color = Colors.blueAccent.withOpacity(0.15));
+        paint.color = Colors.blueAccent;
+      }
     }
   }
 
