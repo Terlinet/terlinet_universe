@@ -843,11 +843,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
           // SABRE DE LUZ INTERATIVO
           if (_isHandVisible)
-            Positioned.fill(
-              child: CustomPaint(
-                painter: LightsaberPainter(
-                  pos: _handPos,
-                  angle: _saberAngle,
+            IgnorePointer(
+              child: Positioned.fill(
+                child: CustomPaint(
+                  painter: LightsaberPainter(
+                    pos: _handPos,
+                    angle: _saberAngle,
+                  ),
                 ),
               ),
             ),

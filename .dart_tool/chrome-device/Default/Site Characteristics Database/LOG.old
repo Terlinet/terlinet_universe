@@ -1,12 +1,16 @@
-2026/05/09-18:49:30.502 2ea8 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.756044e8\flutter_tools_chrome_device.ac4aedd3\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/09-18:49:30.505 2ea8 Recovering log #22
-2026/05/09-18:49:30.505 2ea8 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.756044e8\flutter_tools_chrome_device.ac4aedd3\Default\Site Characteristics Database/000022.log 
-2026/05/09-18:49:30.506 2ea8 Delete type=0 #3
-2026/05/09-18:49:30.506 2ea8 Delete type=2 #4
-2026/05/09-18:49:30.506 2ea8 Delete type=0 #6
-2026/05/09-18:49:30.506 2ea8 Delete type=2 #7
-2026/05/09-18:49:30.506 2ea8 Delete type=2 #8
-2026/05/09-18:49:30.506 2ea8 Delete type=0 #10
-2026/05/09-18:49:30.506 2ea8 Delete type=0 #15
-2026/05/09-18:49:30.507 2ea8 Delete type=2 #16
-2026/05/09-18:49:30.507 2ea8 Delete type=2 #23
+2026/05/09-19:03:05.380 3f9c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.7a10fd91\flutter_tools_chrome_device.4303d972\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/09-19:03:05.381 11e0 Compacting 11@0 + 0@1 files
+2026/05/09-19:03:05.387 11e0 Generated table #37@0: 3 keys, 259 bytes
+2026/05/09-19:03:05.387 11e0 Compacted 11@0 + 0@1 files => 259 bytes
+2026/05/09-19:03:05.389 11e0 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/09-19:03:05.390 11e0 Delete type=2 #4
+2026/05/09-19:03:05.390 11e0 Delete type=2 #7
+2026/05/09-19:03:05.390 11e0 Delete type=2 #8
+2026/05/09-19:03:05.391 11e0 Delete type=2 #16
+2026/05/09-19:03:05.391 11e0 Delete type=2 #23
+2026/05/09-19:03:05.391 11e0 Delete type=2 #29
+2026/05/09-19:03:05.391 11e0 Delete type=2 #30
+2026/05/09-19:03:05.391 11e0 Delete type=2 #31
+2026/05/09-19:03:05.391 11e0 Delete type=2 #32
+2026/05/09-19:03:05.391 11e0 Delete type=2 #33
+2026/05/09-19:03:05.391 11e0 Delete type=2 #34
