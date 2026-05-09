@@ -278,28 +278,35 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     }
 
     try {
-      final response = await html.window.fetch(
-        _apiUrl,
-        js_util.jsify({
+      // Usa fetch nativo via promise do JS para evitar problemas de cast no Dart
+      final dynamic response = await js_util.promiseToFuture(
+        html.window.fetch(_apiUrl, js_util.jsify({
           'method': 'POST',
           'headers': {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
           },
           'body': jsonEncode({
             'text': prompt,
             'is_agent': false,
           }),
-        }),
+        }))
       );
 
-      if (!response.ok) {
-        throw Exception("Erro no servidor: ${response.status}");
+      // Acessa a propriedade 'ok' de forma segura via JS
+      final bool ok = js_util.getProperty(response, 'ok') ?? false;
+      if (!ok) {
+        final int status = js_util.getProperty(response, 'status') ?? 0;
+        throw Exception("Erro no servidor: $status");
       }
 
-      final data = await response.json();
-      final textResponse = js_util.getProperty(data, 'text');
-      final audioBase64 = js_util.getProperty(data, 'audio');
+      // Lê como texto via promise do JS
+      final String responseText = await js_util.promiseToFuture(
+        js_util.callMethod(response, 'text', [])
+      );
+
+      final Map<String, dynamic> data = jsonDecode(responseText);
+      final String textResponse = data['text'] ?? "Sem resposta do núcleo.";
+      final String? audioBase64 = data['audio'];
 
       if (mounted) {
         setState(() {
