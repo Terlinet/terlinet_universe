@@ -57,9 +57,11 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _isLoadingDuel = false;
 
   // Variáveis do Sabre de Luz
-  Offset _handPos = const Offset(0.5, 0.8); // Posição normalizada (0.0 a 1.0)
+  Offset _handPos = const Offset(0.5, 0.9); // Posição inicial no fundo
   double _saberAngle = 0.0;
-  bool _isHandVisible = false;
+  bool _isHandVisible = true; // Sempre visível agora
+  bool _isHandDetected = false; // Rastreia se a mão real foi detectada
+  bool _firstInteractionDone = false;
 
   // Controllers para entrada do usuário
   final TextEditingController _textController = TextEditingController();
@@ -206,7 +208,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
             if (mounted) {
               setState(() {
-                _isHandVisible = true;
+                _isHandDetected = true;
                 _handPos = Offset(
                   js_util.getProperty(wrist, 'x'),
                   js_util.getProperty(wrist, 'y')
@@ -219,7 +221,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               });
             }
           } else {
-            if (mounted && _isHandVisible) setState(() => _isHandVisible = false);
+            if (mounted && _isHandDetected) {
+              setState(() {
+                _isHandDetected = false;
+                // Mantém o sabre visível na posição padrão quando a mão some
+                _handPos = const Offset(0.5, 0.9);
+                _saberAngle = 0.0;
+              });
+            }
           }
         })
       ]);
@@ -391,7 +400,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   Future<void> _triggerAiInteraction({String? customText}) async {
     if (_isProcessing) return;
     
-    final prompt = customText ?? "Olá TerlineT, acabei de olhar para você. Me dê as boas vindas ao seu universo e pergunte como pode me ajudar.";
+    String prompt = customText ?? "Olá TerlineT, acabei de olhar para você. Me dê as boas vindas ao seu universo e pergunte como pode me ajudar.";
+
+    // Se for a primeira interação, injeta a instrução do Sabre de Luz
+    if (!_firstInteractionDone && customText == null) {
+      prompt = "Olá TerlineT, acabei de olhar para você pela primeira vez. Me dê as boas vindas. "
+               "Além disso, percebi um sabre de luz vermelho flutuando aqui embaixo. "
+               "Faça uma brincadeira me desafiando a usar minha 'Força Jedi' para levantá-lo e controlá-lo.";
+      _firstInteractionDone = true;
+    }
 
     if (mounted) {
       setState(() {
