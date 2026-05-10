@@ -105,6 +105,20 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       (int viewId) => _cameraVideoElement,
     );
 
+    // Fábrica para o Holograma de Imagem (Resolve erro de CORS)
+    ui_web.platformViewRegistry.registerViewFactory(
+      'hologram-view',
+      (int viewId) {
+        final img = html.ImageElement()
+          ..style.width = '100%'
+          ..style.height = '100%'
+          ..style.objectFit = 'cover'
+          ..style.borderRadius = '12px';
+        if (_currentImageUrl != null) img.src = _currentImageUrl!;
+        return img;
+      },
+    );
+
     _initFaceIA();
     _initHandsIA(); // Inicializa rastreio de mãos
     _startCamera();
@@ -800,37 +814,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Container(
+                                height: 300, // Aumentado para melhor visualização
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                                  color: Colors.black,
                                 ),
-                                child: Image.network(
-                                  _currentImageUrl!,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      height: 200,
-                                      color: Colors.blue.withOpacity(0.05),
-                                      child: const Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.wallpaper, color: Colors.blueAccent, size: 40),
-                                          SizedBox(height: 8),
-                                          Text(
-                                            "PROJETANDO HOLOGRAMA...",
-                                            style: TextStyle(color: Colors.blueAccent, fontSize: 10, fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  loadingBuilder: (context, child, loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return const SizedBox(
-                                      height: 200,
-                                      child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
-                                    );
-                                  },
+                                child: HtmlElementView(
+                                  key: ValueKey(_currentImageUrl), // Força recarregar quando a URL mudar
+                                  viewType: 'hologram-view',
                                 ),
                               ),
                             ),

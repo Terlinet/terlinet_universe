@@ -1,3 +1,2 @@
-2026/05/10-09:03:49.783 3fb0 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.279883fb\flutter_tools_chrome_device.ccfdd15e\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/10-09:03:49.789 3fb0 Recovering log #3
-2026/05/10-09:03:49.791 3fb0 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.279883fb\flutter_tools_chrome_device.ccfdd15e\Default\Local Storage\leveldb/000003.log 
+2026/05/10-09:18:06.029 4770 Creating DB C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Local Storage\leveldb since it was missing.
+2026/05/10-09:18:06.051 4770 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Local Storage\leveldb/MANIFEST-000001
