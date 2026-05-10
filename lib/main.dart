@@ -112,7 +112,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ..style.width = '100%'
           ..style.height = '100%'
           ..style.objectFit = 'cover'
-          ..style.borderRadius = '12px';
+          ..style.borderRadius = '12px'
+          ..crossOrigin = 'anonymous'; // Adicionado para evitar bloqueio de segurança
         if (_currentImageUrl != null) img.src = _currentImageUrl!;
         return img;
       },

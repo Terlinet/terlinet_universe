@@ -1,59 +1,38 @@
-2026/05/10-11:54:34.592 6bc Log #3: 22 ops saved to Table #164 OK
-2026/05/10-11:54:34.597 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000003.log: OK
-2026/05/10-11:54:34.603 6bc Log #6: 1 ops saved to Table #165 OK
-2026/05/10-11:54:34.605 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000006.log: OK
-2026/05/10-11:54:34.610 6bc Log #10: 1 ops saved to Table #166 OK
-2026/05/10-11:54:34.612 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000010.log: OK
-2026/05/10-11:54:34.617 6bc Log #15: 1 ops saved to Table #167 OK
-2026/05/10-11:54:34.619 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000015.log: OK
-2026/05/10-11:54:34.624 6bc Log #22: 5 ops saved to Table #168 OK
-2026/05/10-11:54:34.627 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000022.log: OK
-2026/05/10-11:54:34.631 6bc Log #36: 2 ops saved to Table #169 OK
-2026/05/10-11:54:34.633 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000036.log: OK
-2026/05/10-11:54:34.640 6bc Log #52: 1 ops saved to Table #170 OK
-2026/05/10-11:54:34.642 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000052.log: OK
-2026/05/10-11:54:34.648 6bc Log #62: 2 ops saved to Table #171 OK
-2026/05/10-11:54:34.650 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000062.log: OK
-2026/05/10-11:54:34.655 6bc Log #82: 1 ops saved to Table #172 OK
-2026/05/10-11:54:34.657 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000082.log: OK
-2026/05/10-11:54:34.662 6bc Log #94: 1 ops saved to Table #173 OK
-2026/05/10-11:54:34.664 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000094.log: OK
-2026/05/10-11:54:34.669 6bc Log #107: 2 ops saved to Table #174 OK
-2026/05/10-11:54:34.671 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000107.log: OK
-2026/05/10-11:54:34.676 6bc Log #133: 1 ops saved to Table #175 OK
-2026/05/10-11:54:34.679 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000133.log: OK
-2026/05/10-11:54:34.684 6bc Log #148: 5 ops saved to Table #176 OK
-2026/05/10-11:54:34.685 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/000148.log: OK
-2026/05/10-11:54:34.685 6bc Table #4: 22 entries OK
-2026/05/10-11:54:34.685 6bc Table #7: 22 entries OK
-2026/05/10-11:54:34.685 6bc Table #8: 1 entries OK
-2026/05/10-11:54:34.686 6bc Table #16: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #23: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #29: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #37: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #44: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #53: 3 entries OK
-2026/05/10-11:54:34.686 6bc Table #63: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #72: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #83: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #95: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #108: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #120: 3 entries OK
-2026/05/10-11:54:34.687 6bc Table #134: 3 entries OK
-2026/05/10-11:54:34.688 6bc Table #149: 3 entries OK
-2026/05/10-11:54:34.688 6bc Table #163: 3 entries OK
-2026/05/10-11:54:34.688 6bc Table #164: 22 entries OK
-2026/05/10-11:54:34.688 6bc Table #165: 1 entries OK
-2026/05/10-11:54:34.688 6bc Table #166: 1 entries OK
-2026/05/10-11:54:34.688 6bc Table #167: 1 entries OK
-2026/05/10-11:54:34.689 6bc Table #168: 5 entries OK
-2026/05/10-11:54:34.689 6bc Table #169: 2 entries OK
-2026/05/10-11:54:34.689 6bc Table #170: 1 entries OK
-2026/05/10-11:54:34.689 6bc Table #171: 2 entries OK
-2026/05/10-11:54:34.689 6bc Table #172: 1 entries OK
-2026/05/10-11:54:34.689 6bc Table #173: 1 entries OK
-2026/05/10-11:54:34.690 6bc Table #174: 2 entries OK
-2026/05/10-11:54:34.690 6bc Table #175: 1 entries OK
-2026/05/10-11:54:34.690 6bc Table #176: 5 entries OK
-2026/05/10-11:54:34.694 6bc Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database/MANIFEST-000001: OK
-2026/05/10-11:54:34.702 6bc **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.131a4866\flutter_tools_chrome_device.6ec5ff2d\Default\Site Characteristics Database; recovered 31 files; 7912 bytes. Some data may have been lost. ****
+2026/05/10-12:07:21.765 48c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.f3172d9e\flutter_tools_chrome_device.a06656f2\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-12:07:21.766 12fc Compacting 33@0 + 0@1 files
+2026/05/10-12:07:21.777 12fc Generated table #196@0: 4 keys, 323 bytes
+2026/05/10-12:07:21.777 12fc Compacted 33@0 + 0@1 files => 323 bytes
+2026/05/10-12:07:21.779 12fc compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/10-12:07:21.780 12fc Delete type=2 #4
+2026/05/10-12:07:21.780 12fc Delete type=2 #7
+2026/05/10-12:07:21.780 12fc Delete type=2 #8
+2026/05/10-12:07:21.780 12fc Delete type=2 #16
+2026/05/10-12:07:21.780 12fc Delete type=2 #23
+2026/05/10-12:07:21.780 12fc Delete type=2 #29
+2026/05/10-12:07:21.781 12fc Delete type=2 #37
+2026/05/10-12:07:21.781 12fc Delete type=2 #44
+2026/05/10-12:07:21.781 12fc Delete type=2 #53
+2026/05/10-12:07:21.781 12fc Delete type=2 #63
+2026/05/10-12:07:21.781 12fc Delete type=2 #72
+2026/05/10-12:07:21.781 12fc Delete type=2 #83
+2026/05/10-12:07:21.781 12fc Delete type=2 #95
+2026/05/10-12:07:21.781 12fc Delete type=2 #108
+2026/05/10-12:07:21.781 12fc Delete type=2 #120
+2026/05/10-12:07:21.781 12fc Delete type=2 #134
+2026/05/10-12:07:21.781 12fc Delete type=2 #149
+2026/05/10-12:07:21.782 12fc Delete type=2 #163
+2026/05/10-12:07:21.782 12fc Delete type=2 #179
+2026/05/10-12:07:21.782 12fc Delete type=2 #180
+2026/05/10-12:07:21.782 12fc Delete type=2 #181
+2026/05/10-12:07:21.782 12fc Delete type=2 #182
+2026/05/10-12:07:21.782 12fc Delete type=2 #183
+2026/05/10-12:07:21.782 12fc Delete type=2 #184
+2026/05/10-12:07:21.782 12fc Delete type=2 #185
+2026/05/10-12:07:21.782 12fc Delete type=2 #186
+2026/05/10-12:07:21.782 12fc Delete type=2 #187
+2026/05/10-12:07:21.782 12fc Delete type=2 #188
+2026/05/10-12:07:21.782 12fc Delete type=2 #189
+2026/05/10-12:07:21.782 12fc Delete type=2 #190
+2026/05/10-12:07:21.782 12fc Delete type=2 #191
+2026/05/10-12:07:21.782 12fc Delete type=2 #192
+2026/05/10-12:07:21.783 12fc Delete type=2 #193

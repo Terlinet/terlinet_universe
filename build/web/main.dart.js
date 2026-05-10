@@ -78628,6 +78628,7 @@ B.fs.Nh(r,B.fs.IK(r,"object-fit"),"cover","")
 r=s.style
 r.toString
 B.fs.Nh(r,B.fs.IK(r,"border-radius"),"12px","")
+s.crossOrigin="anonymous"
 r=this.a.fr
 if(r!=null)s.src=r
 return s},
