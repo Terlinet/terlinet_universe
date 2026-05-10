@@ -56,9 +56,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _handsIaAborted = false; // Detecta se o motor travou
   bool _hasCamera = true;
   bool _isIaReady = false;
-  List<List<Offset>> _detectedFaces = []; // Lista de listas para múltiplos rostos
+  List<List<Offset>> _detectedFaces = [];
   String? _duelGifBase64;
   bool _isLoadingDuel = false;
+  String? _currentImageUrl; // Armazena a imagem atual da explicação
 
   // Variáveis do Sabre de Luz
   Offset _handPos = const Offset(0.5, 0.9); // Posição inicial no fundo
@@ -494,10 +495,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       final Map<String, dynamic> data = jsonDecode(responseText);
       final String textResponse = data['text'] ?? "Sem resposta do núcleo.";
       final String? audioBase64 = data['audio'];
+      final String? imageUrl = data['image_url'];
 
       if (mounted) {
         setState(() {
           _aiMessage = textResponse;
+          _currentImageUrl = imageUrl;
           _isProcessing = false;
           _textController.clear();
         });
@@ -789,6 +792,30 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                             child: LinearProgressIndicator(
                               backgroundColor: Colors.transparent,
                               color: Colors.blueAccent,
+                            ),
+                          ),
+                        if (_currentImageUrl != null)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                                ),
+                                child: Image.network(
+                                  _currentImageUrl!,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return const SizedBox(
+                                      height: 200,
+                                      child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         Text(
