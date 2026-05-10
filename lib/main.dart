@@ -113,7 +113,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     ui_web.platformViewRegistry.registerViewFactory(
       'hologram-view',
       (int viewId) {
-        final img = html.ImageElement()
+        final img = html.ImageElement();
+        img
           ..style.width = '100%'
           ..style.height = '100%'
           ..style.objectFit = 'cover'
