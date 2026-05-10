@@ -52,6 +52,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   bool _isProcessing = false; // API interaction processing
   bool _isFaceProcessing = false; // MediaPipe Face processing
   bool _isHandsProcessing = false; // MediaPipe Hands processing
+  bool _faceIaAborted = false; // Detecta se o motor travou
+  bool _handsIaAborted = false; // Detecta se o motor travou
   bool _hasCamera = true;
   bool _isIaReady = false;
   List<List<Offset>> _detectedFaces = []; // Lista de listas para múltiplos rostos
@@ -183,9 +185,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
       final options = js_util.newObject();
       js_util.setProperty(options, 'locateFile', allowInterop((file, base) =>
-        'https://cdn.jsdelivr.net/npm/@mediapipe/hands/$file'));
+        'https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4/$file'));
 
       _hands = js_util.callConstructor(handsClass, [options]);
+
+      js_util.setProperty(_hands, 'onError', allowInterop((err) {
+        print("MediaPipe Hands error: $err");
+        _handsIaAborted = true;
+      }));
 
       js_util.callMethod(_hands, 'setOptions', [
         js_util.jsify({
@@ -362,7 +369,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           final imageSource = js_util.jsify({'image': _cameraVideoElement});
 
           // Envia para Face Detection (com trava para evitar memory access out of bounds)
-          if (_faceDetection != null && !_isFaceProcessing) {
+          if (_faceDetection != null && !_isFaceProcessing && !_faceIaAborted) {
             _isFaceProcessing = true;
             try {
               final promise = js_util.callMethod(_faceDetection, 'send', [imageSource]);
@@ -370,14 +377,17 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 await js_util.promiseToFuture(promise);
               }
             } catch (e) {
-              print("Erro Face send: $e");
+              print("Erro Face send (Motor possivelmente abortado): $e");
+              if (e.toString().contains("Aborted") || e.toString().contains("out of bounds")) {
+                _faceIaAborted = true;
+              }
             } finally {
               _isFaceProcessing = false;
             }
           }
 
           // Envia para Hand Tracking (com trava independente)
-          if (_hands != null && !_isHandsProcessing) {
+          if (_hands != null && !_isHandsProcessing && !_handsIaAborted) {
             _isHandsProcessing = true;
             try {
               final promise = js_util.callMethod(_hands, 'send', [imageSource]);
@@ -385,7 +395,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 await js_util.promiseToFuture(promise);
               }
             } catch (e) {
-              print("Erro Hands send: $e");
+              print("Erro Hands send (Motor possivelmente abortado): $e");
+              if (e.toString().contains("Aborted") || e.toString().contains("out of bounds")) {
+                _handsIaAborted = true;
+              }
             } finally {
               _isHandsProcessing = false;
             }
@@ -641,7 +654,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                 else
                   GestureDetector(
                     onTap: () {
+                      setState(() {
+                        _faceIaAborted = false;
+                        _handsIaAborted = false;
+                      });
                       _initFaceIA();
+                      _initHandsIA();
                       _startCamera();
                     },
                     child: Text(
