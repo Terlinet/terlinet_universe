@@ -807,6 +807,23 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                                   _currentImageUrl!,
                                   height: 200,
                                   fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      height: 200,
+                                      color: Colors.blue.withOpacity(0.05),
+                                      child: const Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.wallpaper, color: Colors.blueAccent, size: 40),
+                                          SizedBox(height: 8),
+                                          Text(
+                                            "PROJETANDO HOLOGRAMA...",
+                                            style: TextStyle(color: Colors.blueAccent, fontSize: 10, fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                   loadingBuilder: (context, child, loadingProgress) {
                                     if (loadingProgress == null) return child;
                                     return const SizedBox(
