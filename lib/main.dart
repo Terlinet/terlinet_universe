@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   List<List<Offset>> _detectedFaces = [];
   String? _duelGifBase64;
   bool _isLoadingDuel = false;
-  List<String> _currentImageUrls = []; // Lista para múltiplos hologramas
+  String? _currentImageUrl; // Armazena a imagem atual da explicação
 
   // Variáveis do Sabre de Luz
   Offset _handPos = const Offset(0.5, 0.9); // Posição inicial no fundo
@@ -113,9 +113,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ..style.height = '100%'
           ..style.objectFit = 'cover'
           ..style.borderRadius = '12px';
-
-        // Pega a URL do atributo customizado do container pai ou da lista
-        // (Ajuste para suportar múltiplas instâncias)
+        if (_currentImageUrl != null) img.src = _currentImageUrl!;
         return img;
       },
     );
@@ -512,10 +510,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       final String? audioBase64 = data['audio'];
       final List<dynamic> imageUrls = data['image_urls'] ?? [];
 
+      // Pega a primeira imagem da lista ou o campo individual se existir
+      final String? imageUrl = imageUrls.isNotEmpty ? imageUrls[0] : data['image_url'];
+
       if (mounted) {
         setState(() {
           _aiMessage = textResponse;
-          _currentImageUrls = List<String>.from(imageUrls);
+          _currentImageUrl = imageUrl;
           _isProcessing = false;
           _textController.clear();
         });
@@ -809,45 +810,22 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                               color: Colors.blueAccent,
                             ),
                           ),
-                        if (_currentImageUrls.isNotEmpty)
+                        if (_currentImageUrl != null)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
-                            child: SizedBox(
-                              height: 300,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _currentImageUrls.length,
-                                itemBuilder: (context, index) {
-                                  final url = _currentImageUrls[index];
-                                  return Container(
-                                    width: 300,
-                                    margin: const EdgeInsets.only(right: 12),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: Colors.blue.withOpacity(0.3)),
-                                      color: Colors.black,
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: HtmlElementView(
-                                        key: ValueKey(url),
-                                        viewType: 'hologram-view',
-                                        onPlatformViewCreated: (viewId) {
-                                          final elements = html.document.querySelectorAll('img');
-                                          for (var e in elements) {
-                                            if (e is html.ImageElement) {
-                                              final src = e.src;
-                                              if (src == "" || src.contains(html.window.location.host)) {
-                                                e.src = url;
-                                                break;
-                                              }
-                                            }
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  );
-                                },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Container(
+                                height: 300,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                                  color: Colors.black,
+                                ),
+                                child: HtmlElementView(
+                                  key: ValueKey(_currentImageUrl),
+                                  viewType: 'hologram-view',
+                                ),
                               ),
                             ),
                           ),
