@@ -1,31 +1,84 @@
-2026/05/10-09:18:06.094 4778 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/10-09:18:06.095 453c Compacting 26@0 + 0@1 files
-2026/05/10-09:18:06.102 453c Generated table #134@0: 3 keys, 259 bytes
-2026/05/10-09:18:06.102 453c Compacted 26@0 + 0@1 files => 259 bytes
-2026/05/10-09:18:06.104 453c compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/10-09:18:06.104 453c Delete type=2 #4
-2026/05/10-09:18:06.104 453c Delete type=2 #7
-2026/05/10-09:18:06.105 453c Delete type=2 #8
-2026/05/10-09:18:06.105 453c Delete type=2 #16
-2026/05/10-09:18:06.105 453c Delete type=2 #23
-2026/05/10-09:18:06.105 453c Delete type=2 #29
-2026/05/10-09:18:06.105 453c Delete type=2 #37
-2026/05/10-09:18:06.105 453c Delete type=2 #44
-2026/05/10-09:18:06.105 453c Delete type=2 #53
-2026/05/10-09:18:06.105 453c Delete type=2 #63
-2026/05/10-09:18:06.105 453c Delete type=2 #72
-2026/05/10-09:18:06.105 453c Delete type=2 #83
-2026/05/10-09:18:06.105 453c Delete type=2 #95
-2026/05/10-09:18:06.105 453c Delete type=2 #108
-2026/05/10-09:18:06.105 453c Delete type=2 #120
-2026/05/10-09:18:06.106 453c Delete type=2 #121
-2026/05/10-09:18:06.106 453c Delete type=2 #122
-2026/05/10-09:18:06.106 453c Delete type=2 #123
-2026/05/10-09:18:06.106 453c Delete type=2 #124
-2026/05/10-09:18:06.106 453c Delete type=2 #125
-2026/05/10-09:18:06.106 453c Delete type=2 #126
-2026/05/10-09:18:06.106 453c Delete type=2 #127
-2026/05/10-09:18:06.106 453c Delete type=2 #128
-2026/05/10-09:18:06.106 453c Delete type=2 #129
-2026/05/10-09:18:06.106 453c Delete type=2 #130
-2026/05/10-09:18:06.106 453c Delete type=2 #131
+2026/05/10-09:47:02.301 2d5c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.facab922\flutter_tools_chrome_device.407bf9ec\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-09:47:02.304 2d5c Recovering log #3
+2026/05/10-09:47:02.304 2d5c Level-0 table #151: started
+2026/05/10-09:47:02.310 2d5c Level-0 table #151: 540 bytes OK
+2026/05/10-09:47:02.311 2d5c Recovering log #6
+2026/05/10-09:47:02.311 2d5c Level-0 table #152: started
+2026/05/10-09:47:02.316 2d5c Level-0 table #152: 165 bytes OK
+2026/05/10-09:47:02.316 2d5c Recovering log #10
+2026/05/10-09:47:02.316 2d5c Level-0 table #153: started
+2026/05/10-09:47:02.321 2d5c Level-0 table #153: 165 bytes OK
+2026/05/10-09:47:02.322 2d5c Recovering log #15
+2026/05/10-09:47:02.322 2d5c Level-0 table #154: started
+2026/05/10-09:47:02.326 2d5c Level-0 table #154: 165 bytes OK
+2026/05/10-09:47:02.327 2d5c Recovering log #22
+2026/05/10-09:47:02.327 2d5c Level-0 table #155: started
+2026/05/10-09:47:02.331 2d5c Level-0 table #155: 212 bytes OK
+2026/05/10-09:47:02.331 2d5c Recovering log #36
+2026/05/10-09:47:02.331 2d5c Level-0 table #156: started
+2026/05/10-09:47:02.336 2d5c Level-0 table #156: 196 bytes OK
+2026/05/10-09:47:02.336 2d5c Recovering log #52
+2026/05/10-09:47:02.336 2d5c Level-0 table #157: started
+2026/05/10-09:47:02.340 2d5c Level-0 table #157: 165 bytes OK
+2026/05/10-09:47:02.340 2d5c Recovering log #62
+2026/05/10-09:47:02.340 2d5c Level-0 table #158: started
+2026/05/10-09:47:02.345 2d5c Level-0 table #158: 180 bytes OK
+2026/05/10-09:47:02.345 2d5c Recovering log #82
+2026/05/10-09:47:02.345 2d5c Level-0 table #159: started
+2026/05/10-09:47:02.349 2d5c Level-0 table #159: 165 bytes OK
+2026/05/10-09:47:02.349 2d5c Recovering log #94
+2026/05/10-09:47:02.350 2d5c Level-0 table #160: started
+2026/05/10-09:47:02.354 2d5c Level-0 table #160: 165 bytes OK
+2026/05/10-09:47:02.354 2d5c Recovering log #107
+2026/05/10-09:47:02.354 2d5c Level-0 table #161: started
+2026/05/10-09:47:02.358 2d5c Level-0 table #161: 179 bytes OK
+2026/05/10-09:47:02.358 2d5c Recovering log #133
+2026/05/10-09:47:02.359 2d5c Level-0 table #162: started
+2026/05/10-09:47:02.363 2d5c Level-0 table #162: 165 bytes OK
+2026/05/10-09:47:02.363 2d5c Recovering log #148
+2026/05/10-09:47:02.363 2d5c Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.facab922\flutter_tools_chrome_device.407bf9ec\Default\Site Characteristics Database/000148.log 
+2026/05/10-09:47:02.365 2d5c Delete type=0 #3
+2026/05/10-09:47:02.366 2d5c Delete type=2 #4
+2026/05/10-09:47:02.366 2d5c Delete type=0 #6
+2026/05/10-09:47:02.366 2d5c Delete type=2 #7
+2026/05/10-09:47:02.366 2d5c Delete type=2 #8
+2026/05/10-09:47:02.366 2d5c Delete type=0 #10
+2026/05/10-09:47:02.366 2d5c Delete type=0 #15
+2026/05/10-09:47:02.366 2d5c Delete type=2 #16
+2026/05/10-09:47:02.366 2d5c Delete type=0 #22
+2026/05/10-09:47:02.366 2d5c Delete type=2 #23
+2026/05/10-09:47:02.366 2d5c Delete type=2 #29
+2026/05/10-09:47:02.366 2d5c Delete type=0 #36
+2026/05/10-09:47:02.366 2d5c Delete type=2 #37
+2026/05/10-09:47:02.366 2d5c Delete type=2 #44
+2026/05/10-09:47:02.366 2d5c Delete type=0 #52
+2026/05/10-09:47:02.366 2d5c Delete type=2 #53
+2026/05/10-09:47:02.366 2d5c Delete type=0 #62
+2026/05/10-09:47:02.366 2d5c Delete type=2 #63
+2026/05/10-09:47:02.366 2d5c Delete type=2 #72
+2026/05/10-09:47:02.366 2d5c Delete type=0 #82
+2026/05/10-09:47:02.366 2d5c Delete type=2 #83
+2026/05/10-09:47:02.366 2d5c Delete type=0 #94
+2026/05/10-09:47:02.366 2d5c Delete type=2 #95
+2026/05/10-09:47:02.366 2d5c Delete type=0 #107
+2026/05/10-09:47:02.366 2d5c Delete type=2 #108
+2026/05/10-09:47:02.366 2d5c Delete type=2 #120
+2026/05/10-09:47:02.366 2d5c Delete type=0 #133
+2026/05/10-09:47:02.366 2d5c Delete type=2 #134
+2026/05/10-09:47:02.371 3c48 Compacting 12@0 + 1@1 files
+2026/05/10-09:47:02.377 3c48 Generated table #163@0: 3 keys, 259 bytes
+2026/05/10-09:47:02.377 3c48 Compacted 12@0 + 1@1 files => 259 bytes
+2026/05/10-09:47:02.379 3c48 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/10-09:47:02.380 3c48 Delete type=2 #149
+2026/05/10-09:47:02.380 3c48 Delete type=2 #151
+2026/05/10-09:47:02.380 3c48 Delete type=2 #152
+2026/05/10-09:47:02.380 3c48 Delete type=2 #153
+2026/05/10-09:47:02.380 3c48 Delete type=2 #154
+2026/05/10-09:47:02.380 3c48 Delete type=2 #155
+2026/05/10-09:47:02.380 3c48 Delete type=2 #156
+2026/05/10-09:47:02.380 3c48 Delete type=2 #157
+2026/05/10-09:47:02.380 3c48 Delete type=2 #158
+2026/05/10-09:47:02.380 3c48 Delete type=2 #159
+2026/05/10-09:47:02.380 3c48 Delete type=2 #160
+2026/05/10-09:47:02.381 3c48 Delete type=2 #161
+2026/05/10-09:47:02.381 3c48 Delete type=2 #162

@@ -59,7 +59,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   List<List<Offset>> _detectedFaces = [];
   String? _duelGifBase64;
   bool _isLoadingDuel = false;
-  String? _currentImageUrl; // Armazena a imagem atual da explicação
+  List<String> _currentImageUrls = []; // Lista para múltiplos hologramas
 
   // Variáveis do Sabre de Luz
   Offset _handPos = const Offset(0.5, 0.9); // Posição inicial no fundo
@@ -105,7 +105,6 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       (int viewId) => _cameraVideoElement,
     );
 
-    // Fábrica para o Holograma de Imagem (Resolve erro de CORS)
     ui_web.platformViewRegistry.registerViewFactory(
       'hologram-view',
       (int viewId) {
@@ -114,7 +113,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ..style.height = '100%'
           ..style.objectFit = 'cover'
           ..style.borderRadius = '12px';
-        if (_currentImageUrl != null) img.src = _currentImageUrl!;
+
+        // Pega a URL do atributo customizado do container pai ou da lista
+        // (Ajuste para suportar múltiplas instâncias)
         return img;
       },
     );
@@ -509,12 +510,12 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       final Map<String, dynamic> data = jsonDecode(responseText);
       final String textResponse = data['text'] ?? "Sem resposta do núcleo.";
       final String? audioBase64 = data['audio'];
-      final String? imageUrl = data['image_url'];
+      final List<dynamic> imageUrls = data['image_urls'] ?? [];
 
       if (mounted) {
         setState(() {
           _aiMessage = textResponse;
-          _currentImageUrl = imageUrl;
+          _currentImageUrls = List<String>.from(imageUrls);
           _isProcessing = false;
           _textController.clear();
         });
@@ -808,22 +809,43 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                               color: Colors.blueAccent,
                             ),
                           ),
-                        if (_currentImageUrl != null)
+                        if (_currentImageUrls.isNotEmpty)
                           Padding(
                             padding: const EdgeInsets.only(bottom: 16),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Container(
-                                height: 300, // Aumentado para melhor visualização
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
-                                  color: Colors.black,
-                                ),
-                                child: HtmlElementView(
-                                  key: ValueKey(_currentImageUrl), // Força recarregar quando a URL mudar
-                                  viewType: 'hologram-view',
-                                ),
+                            child: SizedBox(
+                              height: 300,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: _currentImageUrls.length,
+                                itemBuilder: (context, index) {
+                                  final url = _currentImageUrls[index];
+                                  return Container(
+                                    width: 300,
+                                    margin: const EdgeInsets.only(right: 12),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                                      color: Colors.black,
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: HtmlElementView(
+                                        key: ValueKey(url),
+                                        viewType: 'hologram-view',
+                                        onPlatformViewCreated: (viewId) {
+                                          // Tenta injetar o SRC diretamente no elemento criado
+                                          final elements = html.document.querySelectorAll('img');
+                                          for (var e in elements) {
+                                            if (e is html.ImageElement && (e.src == "" || e.src.contains(html.window.location.host))) {
+                                              e.src = url;
+                                              break;
+                                            }
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),

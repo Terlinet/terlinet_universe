@@ -1,50 +1,33 @@
-2026/05/10-09:18:05.996 4778 Log #3: 22 ops saved to Table #121 OK
-2026/05/10-09:18:06.002 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000003.log: OK
-2026/05/10-09:18:06.009 4778 Log #6: 1 ops saved to Table #122 OK
-2026/05/10-09:18:06.011 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000006.log: OK
-2026/05/10-09:18:06.016 4778 Log #10: 1 ops saved to Table #123 OK
-2026/05/10-09:18:06.018 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000010.log: OK
-2026/05/10-09:18:06.023 4778 Log #15: 1 ops saved to Table #124 OK
-2026/05/10-09:18:06.025 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000015.log: OK
-2026/05/10-09:18:06.031 4778 Log #22: 5 ops saved to Table #125 OK
-2026/05/10-09:18:06.033 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000022.log: OK
-2026/05/10-09:18:06.038 4778 Log #36: 2 ops saved to Table #126 OK
-2026/05/10-09:18:06.040 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000036.log: OK
-2026/05/10-09:18:06.045 4778 Log #52: 1 ops saved to Table #127 OK
-2026/05/10-09:18:06.047 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000052.log: OK
-2026/05/10-09:18:06.052 4778 Log #62: 2 ops saved to Table #128 OK
-2026/05/10-09:18:06.055 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000062.log: OK
-2026/05/10-09:18:06.060 4778 Log #82: 1 ops saved to Table #129 OK
-2026/05/10-09:18:06.062 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000082.log: OK
-2026/05/10-09:18:06.067 4778 Log #94: 1 ops saved to Table #130 OK
-2026/05/10-09:18:06.070 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000094.log: OK
-2026/05/10-09:18:06.075 4778 Log #107: 2 ops saved to Table #131 OK
-2026/05/10-09:18:06.075 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/000107.log: OK
-2026/05/10-09:18:06.076 4778 Table #4: 22 entries OK
-2026/05/10-09:18:06.076 4778 Table #7: 22 entries OK
-2026/05/10-09:18:06.076 4778 Table #8: 1 entries OK
-2026/05/10-09:18:06.076 4778 Table #16: 3 entries OK
-2026/05/10-09:18:06.076 4778 Table #23: 3 entries OK
-2026/05/10-09:18:06.076 4778 Table #29: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #37: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #44: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #53: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #63: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #72: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #83: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #95: 3 entries OK
-2026/05/10-09:18:06.077 4778 Table #108: 3 entries OK
-2026/05/10-09:18:06.078 4778 Table #120: 3 entries OK
-2026/05/10-09:18:06.078 4778 Table #121: 22 entries OK
-2026/05/10-09:18:06.078 4778 Table #122: 1 entries OK
-2026/05/10-09:18:06.078 4778 Table #123: 1 entries OK
-2026/05/10-09:18:06.078 4778 Table #124: 1 entries OK
-2026/05/10-09:18:06.078 4778 Table #125: 5 entries OK
-2026/05/10-09:18:06.079 4778 Table #126: 2 entries OK
-2026/05/10-09:18:06.079 4778 Table #127: 1 entries OK
-2026/05/10-09:18:06.079 4778 Table #128: 2 entries OK
-2026/05/10-09:18:06.079 4778 Table #129: 1 entries OK
-2026/05/10-09:18:06.079 4778 Table #130: 1 entries OK
-2026/05/10-09:18:06.079 4778 Table #131: 2 entries OK
-2026/05/10-09:18:06.083 4778 Archiving C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database/MANIFEST-000001: OK
-2026/05/10-09:18:06.090 4778 **** Repaired leveldb C:\Users\tertu\AppData\Local\Temp\flutter_tools.25abbf7a\flutter_tools_chrome_device.baa00387\Default\Site Characteristics Database; recovered 26 files; 6650 bytes. Some data may have been lost. ****
+2026/05/10-09:39:55.812 154c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.407c5995\flutter_tools_chrome_device.936bbbb5\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-09:39:55.814 2a10 Compacting 28@0 + 0@1 files
+2026/05/10-09:39:55.835 2a10 Generated table #149@0: 3 keys, 259 bytes
+2026/05/10-09:39:55.835 2a10 Compacted 28@0 + 0@1 files => 259 bytes
+2026/05/10-09:39:55.837 2a10 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/10-09:39:55.837 2a10 Delete type=2 #4
+2026/05/10-09:39:55.837 2a10 Delete type=2 #7
+2026/05/10-09:39:55.837 2a10 Delete type=2 #8
+2026/05/10-09:39:55.837 2a10 Delete type=2 #16
+2026/05/10-09:39:55.837 2a10 Delete type=2 #23
+2026/05/10-09:39:55.837 2a10 Delete type=2 #29
+2026/05/10-09:39:55.837 2a10 Delete type=2 #37
+2026/05/10-09:39:55.838 2a10 Delete type=2 #44
+2026/05/10-09:39:55.838 2a10 Delete type=2 #53
+2026/05/10-09:39:55.838 2a10 Delete type=2 #63
+2026/05/10-09:39:55.838 2a10 Delete type=2 #72
+2026/05/10-09:39:55.838 2a10 Delete type=2 #83
+2026/05/10-09:39:55.838 2a10 Delete type=2 #95
+2026/05/10-09:39:55.838 2a10 Delete type=2 #108
+2026/05/10-09:39:55.838 2a10 Delete type=2 #120
+2026/05/10-09:39:55.838 2a10 Delete type=2 #134
+2026/05/10-09:39:55.838 2a10 Delete type=2 #135
+2026/05/10-09:39:55.838 2a10 Delete type=2 #136
+2026/05/10-09:39:55.838 2a10 Delete type=2 #137
+2026/05/10-09:39:55.838 2a10 Delete type=2 #138
+2026/05/10-09:39:55.838 2a10 Delete type=2 #139
+2026/05/10-09:39:55.838 2a10 Delete type=2 #140
+2026/05/10-09:39:55.838 2a10 Delete type=2 #141
+2026/05/10-09:39:55.838 2a10 Delete type=2 #142
+2026/05/10-09:39:55.839 2a10 Delete type=2 #143
+2026/05/10-09:39:55.839 2a10 Delete type=2 #144
+2026/05/10-09:39:55.839 2a10 Delete type=2 #145
+2026/05/10-09:39:55.839 2a10 Delete type=2 #146
