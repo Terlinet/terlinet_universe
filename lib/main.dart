@@ -514,10 +514,32 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       // Pega a primeira imagem da lista ou o campo individual se existir
       final String? imageUrl = imageUrls.isNotEmpty ? imageUrls[0] : data['image_url'];
 
-      if (mounted) {
+      if (mounted && imageUrl != null) {
+        // Registra uma nova fábrica única para esta URL específica para evitar cache de PlatformView
+        final String viewType = 'hologram-${imageUrl.hashCode}';
+        ui_web.platformViewRegistry.registerViewFactory(
+          viewType,
+          (int viewId) {
+            final img = html.ImageElement()
+              ..src = imageUrl
+              ..style.width = '100%'
+              ..style.height = '100%'
+              ..style.objectFit = 'cover'
+              ..style.borderRadius = '12px'
+              ..crossOrigin = 'anonymous';
+            return img;
+          },
+        );
+
         setState(() {
           _aiMessage = textResponse;
-          _currentImageUrl = imageUrl;
+          _currentImageUrl = imageUrl; // Usado para a ValueKey
+          _isProcessing = false;
+          _textController.clear();
+        });
+      } else if (mounted) {
+        setState(() {
+          _aiMessage = textResponse;
           _isProcessing = false;
           _textController.clear();
         });
@@ -825,7 +847,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                                 ),
                                 child: HtmlElementView(
                                   key: ValueKey(_currentImageUrl),
-                                  viewType: 'hologram-view',
+                                  viewType: 'hologram-${_currentImageUrl.hashCode}',
                                 ),
                               ),
                             ),

@@ -1,97 +1,40 @@
-2026/05/10-12:14:28.537 3b2c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.e9dd6f1a\flutter_tools_chrome_device.7dd798b1\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/10-12:14:28.541 3b2c Recovering log #3
-2026/05/10-12:14:28.541 3b2c Level-0 table #198: started
-2026/05/10-12:14:28.547 3b2c Level-0 table #198: 540 bytes OK
-2026/05/10-12:14:28.547 3b2c Recovering log #6
-2026/05/10-12:14:28.547 3b2c Level-0 table #199: started
-2026/05/10-12:14:28.553 3b2c Level-0 table #199: 165 bytes OK
-2026/05/10-12:14:28.553 3b2c Recovering log #10
-2026/05/10-12:14:28.554 3b2c Level-0 table #200: started
-2026/05/10-12:14:28.559 3b2c Level-0 table #200: 165 bytes OK
-2026/05/10-12:14:28.559 3b2c Recovering log #15
-2026/05/10-12:14:28.560 3b2c Level-0 table #201: started
-2026/05/10-12:14:28.565 3b2c Level-0 table #201: 165 bytes OK
-2026/05/10-12:14:28.565 3b2c Recovering log #22
-2026/05/10-12:14:28.565 3b2c Level-0 table #202: started
-2026/05/10-12:14:28.571 3b2c Level-0 table #202: 212 bytes OK
-2026/05/10-12:14:28.571 3b2c Recovering log #36
-2026/05/10-12:14:28.571 3b2c Level-0 table #203: started
-2026/05/10-12:14:28.576 3b2c Level-0 table #203: 196 bytes OK
-2026/05/10-12:14:28.576 3b2c Recovering log #52
-2026/05/10-12:14:28.576 3b2c Level-0 table #204: started
-2026/05/10-12:14:28.581 3b2c Level-0 table #204: 165 bytes OK
-2026/05/10-12:14:28.581 3b2c Recovering log #62
-2026/05/10-12:14:28.581 3b2c Level-0 table #205: started
-2026/05/10-12:14:28.586 3b2c Level-0 table #205: 180 bytes OK
-2026/05/10-12:14:28.586 3b2c Recovering log #82
-2026/05/10-12:14:28.586 3b2c Level-0 table #206: started
-2026/05/10-12:14:28.590 3b2c Level-0 table #206: 165 bytes OK
-2026/05/10-12:14:28.590 3b2c Recovering log #94
-2026/05/10-12:14:28.590 3b2c Level-0 table #207: started
-2026/05/10-12:14:28.595 3b2c Level-0 table #207: 165 bytes OK
-2026/05/10-12:14:28.595 3b2c Recovering log #107
-2026/05/10-12:14:28.595 3b2c Level-0 table #208: started
-2026/05/10-12:14:28.599 3b2c Level-0 table #208: 179 bytes OK
-2026/05/10-12:14:28.599 3b2c Recovering log #133
-2026/05/10-12:14:28.599 3b2c Level-0 table #209: started
-2026/05/10-12:14:28.604 3b2c Level-0 table #209: 165 bytes OK
-2026/05/10-12:14:28.604 3b2c Recovering log #148
-2026/05/10-12:14:28.604 3b2c Level-0 table #210: started
-2026/05/10-12:14:28.609 3b2c Level-0 table #210: 320 bytes OK
-2026/05/10-12:14:28.609 3b2c Recovering log #178
-2026/05/10-12:14:28.609 3b2c Level-0 table #211: started
-2026/05/10-12:14:28.613 3b2c Level-0 table #211: 168 bytes OK
-2026/05/10-12:14:28.614 3b2c Recovering log #195
-2026/05/10-12:14:28.614 3b2c Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.e9dd6f1a\flutter_tools_chrome_device.7dd798b1\Default\Site Characteristics Database/000195.log 
-2026/05/10-12:14:28.617 3b2c Delete type=0 #3
-2026/05/10-12:14:28.617 3b2c Delete type=2 #4
-2026/05/10-12:14:28.617 3b2c Delete type=0 #6
-2026/05/10-12:14:28.617 3b2c Delete type=2 #7
-2026/05/10-12:14:28.617 3b2c Delete type=2 #8
-2026/05/10-12:14:28.617 3b2c Delete type=0 #10
-2026/05/10-12:14:28.617 3b2c Delete type=0 #15
-2026/05/10-12:14:28.617 3b2c Delete type=2 #16
-2026/05/10-12:14:28.617 3b2c Delete type=0 #22
-2026/05/10-12:14:28.617 3b2c Delete type=2 #23
-2026/05/10-12:14:28.617 3b2c Delete type=2 #29
-2026/05/10-12:14:28.617 3b2c Delete type=0 #36
-2026/05/10-12:14:28.617 3b2c Delete type=2 #37
-2026/05/10-12:14:28.617 3b2c Delete type=2 #44
-2026/05/10-12:14:28.617 3b2c Delete type=0 #52
-2026/05/10-12:14:28.617 3b2c Delete type=2 #53
-2026/05/10-12:14:28.617 3b2c Delete type=0 #62
-2026/05/10-12:14:28.617 3b2c Delete type=2 #63
-2026/05/10-12:14:28.617 3b2c Delete type=2 #72
-2026/05/10-12:14:28.617 3b2c Delete type=0 #82
-2026/05/10-12:14:28.617 3b2c Delete type=2 #83
-2026/05/10-12:14:28.618 3b2c Delete type=0 #94
-2026/05/10-12:14:28.618 3b2c Delete type=2 #95
-2026/05/10-12:14:28.618 3b2c Delete type=0 #107
-2026/05/10-12:14:28.618 3b2c Delete type=2 #108
-2026/05/10-12:14:28.618 3b2c Delete type=2 #120
-2026/05/10-12:14:28.618 3b2c Delete type=0 #133
-2026/05/10-12:14:28.618 3b2c Delete type=2 #134
-2026/05/10-12:14:28.618 3b2c Delete type=0 #148
-2026/05/10-12:14:28.618 3b2c Delete type=2 #149
-2026/05/10-12:14:28.618 3b2c Delete type=2 #163
-2026/05/10-12:14:28.618 3b2c Delete type=0 #178
-2026/05/10-12:14:28.618 3b2c Delete type=2 #179
-2026/05/10-12:14:28.624 3288 Compacting 14@0 + 1@1 files
-2026/05/10-12:14:28.629 3288 Generated table #212@0: 4 keys, 323 bytes
-2026/05/10-12:14:28.630 3288 Compacted 14@0 + 1@1 files => 323 bytes
-2026/05/10-12:14:28.632 3288 compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/10-12:14:28.632 3288 Delete type=2 #196
-2026/05/10-12:14:28.632 3288 Delete type=2 #198
-2026/05/10-12:14:28.633 3288 Delete type=2 #199
-2026/05/10-12:14:28.633 3288 Delete type=2 #200
-2026/05/10-12:14:28.633 3288 Delete type=2 #201
-2026/05/10-12:14:28.633 3288 Delete type=2 #202
-2026/05/10-12:14:28.633 3288 Delete type=2 #203
-2026/05/10-12:14:28.633 3288 Delete type=2 #204
-2026/05/10-12:14:28.633 3288 Delete type=2 #205
-2026/05/10-12:14:28.633 3288 Delete type=2 #206
-2026/05/10-12:14:28.633 3288 Delete type=2 #207
-2026/05/10-12:14:28.633 3288 Delete type=2 #208
-2026/05/10-12:14:28.633 3288 Delete type=2 #209
-2026/05/10-12:14:28.633 3288 Delete type=2 #210
-2026/05/10-12:14:28.633 3288 Delete type=2 #211
+2026/05/10-12:46:10.900 2ed8 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.724cf50c\flutter_tools_chrome_device.aab54f08\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-12:46:10.902 2ed8 Recovering log #229
+2026/05/10-12:46:10.903 2ed8 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.724cf50c\flutter_tools_chrome_device.aab54f08\Default\Site Characteristics Database/000229.log 
+2026/05/10-12:46:10.903 2ed8 Delete type=0 #3
+2026/05/10-12:46:10.903 2ed8 Delete type=2 #4
+2026/05/10-12:46:10.903 2ed8 Delete type=0 #6
+2026/05/10-12:46:10.904 2ed8 Delete type=2 #7
+2026/05/10-12:46:10.904 2ed8 Delete type=2 #8
+2026/05/10-12:46:10.904 2ed8 Delete type=0 #10
+2026/05/10-12:46:10.904 2ed8 Delete type=0 #15
+2026/05/10-12:46:10.998 2ed8 Delete type=2 #16
+2026/05/10-12:46:10.998 2ed8 Delete type=0 #22
+2026/05/10-12:46:10.998 2ed8 Delete type=2 #23
+2026/05/10-12:46:10.998 2ed8 Delete type=2 #29
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #36
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #37
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #44
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #52
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #53
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #62
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #63
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #72
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #82
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #83
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #94
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #95
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #107
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #108
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #120
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #133
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #134
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #148
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #149
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #163
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #178
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #179
+2026/05/10-12:46:10.999 2ed8 Delete type=0 #195
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #196
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #212
+2026/05/10-12:46:10.999 2ed8 Delete type=2 #230

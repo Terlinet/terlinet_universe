@@ -1,38 +1,40 @@
-2026/05/10-12:07:21.765 48c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.f3172d9e\flutter_tools_chrome_device.a06656f2\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/10-12:07:21.766 12fc Compacting 33@0 + 0@1 files
-2026/05/10-12:07:21.777 12fc Generated table #196@0: 4 keys, 323 bytes
-2026/05/10-12:07:21.777 12fc Compacted 33@0 + 0@1 files => 323 bytes
-2026/05/10-12:07:21.779 12fc compacted to: files[ 0 1 0 0 0 0 0 ]
-2026/05/10-12:07:21.780 12fc Delete type=2 #4
-2026/05/10-12:07:21.780 12fc Delete type=2 #7
-2026/05/10-12:07:21.780 12fc Delete type=2 #8
-2026/05/10-12:07:21.780 12fc Delete type=2 #16
-2026/05/10-12:07:21.780 12fc Delete type=2 #23
-2026/05/10-12:07:21.780 12fc Delete type=2 #29
-2026/05/10-12:07:21.781 12fc Delete type=2 #37
-2026/05/10-12:07:21.781 12fc Delete type=2 #44
-2026/05/10-12:07:21.781 12fc Delete type=2 #53
-2026/05/10-12:07:21.781 12fc Delete type=2 #63
-2026/05/10-12:07:21.781 12fc Delete type=2 #72
-2026/05/10-12:07:21.781 12fc Delete type=2 #83
-2026/05/10-12:07:21.781 12fc Delete type=2 #95
-2026/05/10-12:07:21.781 12fc Delete type=2 #108
-2026/05/10-12:07:21.781 12fc Delete type=2 #120
-2026/05/10-12:07:21.781 12fc Delete type=2 #134
-2026/05/10-12:07:21.781 12fc Delete type=2 #149
-2026/05/10-12:07:21.782 12fc Delete type=2 #163
-2026/05/10-12:07:21.782 12fc Delete type=2 #179
-2026/05/10-12:07:21.782 12fc Delete type=2 #180
-2026/05/10-12:07:21.782 12fc Delete type=2 #181
-2026/05/10-12:07:21.782 12fc Delete type=2 #182
-2026/05/10-12:07:21.782 12fc Delete type=2 #183
-2026/05/10-12:07:21.782 12fc Delete type=2 #184
-2026/05/10-12:07:21.782 12fc Delete type=2 #185
-2026/05/10-12:07:21.782 12fc Delete type=2 #186
-2026/05/10-12:07:21.782 12fc Delete type=2 #187
-2026/05/10-12:07:21.782 12fc Delete type=2 #188
-2026/05/10-12:07:21.782 12fc Delete type=2 #189
-2026/05/10-12:07:21.782 12fc Delete type=2 #190
-2026/05/10-12:07:21.782 12fc Delete type=2 #191
-2026/05/10-12:07:21.782 12fc Delete type=2 #192
-2026/05/10-12:07:21.783 12fc Delete type=2 #193
+2026/05/10-12:40:11.063 29e4 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.aea10995\flutter_tools_chrome_device.fea21f8f\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-12:40:11.067 29e4 Recovering log #229
+2026/05/10-12:40:11.067 29e4 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.aea10995\flutter_tools_chrome_device.fea21f8f\Default\Site Characteristics Database/000229.log 
+2026/05/10-12:40:11.068 29e4 Delete type=0 #3
+2026/05/10-12:40:11.068 29e4 Delete type=2 #4
+2026/05/10-12:40:11.068 29e4 Delete type=0 #6
+2026/05/10-12:40:11.068 29e4 Delete type=2 #7
+2026/05/10-12:40:11.068 29e4 Delete type=2 #8
+2026/05/10-12:40:11.068 29e4 Delete type=0 #10
+2026/05/10-12:40:11.068 29e4 Delete type=0 #15
+2026/05/10-12:40:11.069 29e4 Delete type=2 #16
+2026/05/10-12:40:11.069 29e4 Delete type=0 #22
+2026/05/10-12:40:11.069 29e4 Delete type=2 #23
+2026/05/10-12:40:11.069 29e4 Delete type=2 #29
+2026/05/10-12:40:11.069 29e4 Delete type=0 #36
+2026/05/10-12:40:11.069 29e4 Delete type=2 #37
+2026/05/10-12:40:11.069 29e4 Delete type=2 #44
+2026/05/10-12:40:11.069 29e4 Delete type=0 #52
+2026/05/10-12:40:11.069 29e4 Delete type=2 #53
+2026/05/10-12:40:11.069 29e4 Delete type=0 #62
+2026/05/10-12:40:11.069 29e4 Delete type=2 #63
+2026/05/10-12:40:11.069 29e4 Delete type=2 #72
+2026/05/10-12:40:11.069 29e4 Delete type=0 #82
+2026/05/10-12:40:11.069 29e4 Delete type=2 #83
+2026/05/10-12:40:11.069 29e4 Delete type=0 #94
+2026/05/10-12:40:11.069 29e4 Delete type=2 #95
+2026/05/10-12:40:11.069 29e4 Delete type=0 #107
+2026/05/10-12:40:11.069 29e4 Delete type=2 #108
+2026/05/10-12:40:11.069 29e4 Delete type=2 #120
+2026/05/10-12:40:11.069 29e4 Delete type=0 #133
+2026/05/10-12:40:11.069 29e4 Delete type=2 #134
+2026/05/10-12:40:11.069 29e4 Delete type=0 #148
+2026/05/10-12:40:11.069 29e4 Delete type=2 #149
+2026/05/10-12:40:11.069 29e4 Delete type=2 #163
+2026/05/10-12:40:11.069 29e4 Delete type=0 #178
+2026/05/10-12:40:11.069 29e4 Delete type=2 #179
+2026/05/10-12:40:11.070 29e4 Delete type=0 #195
+2026/05/10-12:40:11.070 29e4 Delete type=2 #196
+2026/05/10-12:40:11.070 29e4 Delete type=2 #212
+2026/05/10-12:40:11.070 29e4 Delete type=2 #230
