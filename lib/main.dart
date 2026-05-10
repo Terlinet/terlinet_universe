@@ -833,12 +833,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                                         key: ValueKey(url),
                                         viewType: 'hologram-view',
                                         onPlatformViewCreated: (viewId) {
-                                          // Tenta injetar o SRC diretamente no elemento criado
                                           final elements = html.document.querySelectorAll('img');
                                           for (var e in elements) {
-                                            if (e is html.ImageElement && (e.src == "" || e.src.contains(html.window.location.host))) {
-                                              e.src = url;
-                                              break;
+                                            if (e is html.ImageElement) {
+                                              final src = e.src;
+                                              if (src == "" || src.contains(html.window.location.host)) {
+                                                e.src = url;
+                                                break;
+                                              }
                                             }
                                           }
                                         },
