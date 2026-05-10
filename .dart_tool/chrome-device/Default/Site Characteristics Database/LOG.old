@@ -1,40 +1,111 @@
-2026/05/10-12:40:11.063 29e4 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.aea10995\flutter_tools_chrome_device.fea21f8f\Default\Site Characteristics Database/MANIFEST-000001
-2026/05/10-12:40:11.067 29e4 Recovering log #229
-2026/05/10-12:40:11.067 29e4 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.aea10995\flutter_tools_chrome_device.fea21f8f\Default\Site Characteristics Database/000229.log 
-2026/05/10-12:40:11.068 29e4 Delete type=0 #3
-2026/05/10-12:40:11.068 29e4 Delete type=2 #4
-2026/05/10-12:40:11.068 29e4 Delete type=0 #6
-2026/05/10-12:40:11.068 29e4 Delete type=2 #7
-2026/05/10-12:40:11.068 29e4 Delete type=2 #8
-2026/05/10-12:40:11.068 29e4 Delete type=0 #10
-2026/05/10-12:40:11.068 29e4 Delete type=0 #15
-2026/05/10-12:40:11.069 29e4 Delete type=2 #16
-2026/05/10-12:40:11.069 29e4 Delete type=0 #22
-2026/05/10-12:40:11.069 29e4 Delete type=2 #23
-2026/05/10-12:40:11.069 29e4 Delete type=2 #29
-2026/05/10-12:40:11.069 29e4 Delete type=0 #36
-2026/05/10-12:40:11.069 29e4 Delete type=2 #37
-2026/05/10-12:40:11.069 29e4 Delete type=2 #44
-2026/05/10-12:40:11.069 29e4 Delete type=0 #52
-2026/05/10-12:40:11.069 29e4 Delete type=2 #53
-2026/05/10-12:40:11.069 29e4 Delete type=0 #62
-2026/05/10-12:40:11.069 29e4 Delete type=2 #63
-2026/05/10-12:40:11.069 29e4 Delete type=2 #72
-2026/05/10-12:40:11.069 29e4 Delete type=0 #82
-2026/05/10-12:40:11.069 29e4 Delete type=2 #83
-2026/05/10-12:40:11.069 29e4 Delete type=0 #94
-2026/05/10-12:40:11.069 29e4 Delete type=2 #95
-2026/05/10-12:40:11.069 29e4 Delete type=0 #107
-2026/05/10-12:40:11.069 29e4 Delete type=2 #108
-2026/05/10-12:40:11.069 29e4 Delete type=2 #120
-2026/05/10-12:40:11.069 29e4 Delete type=0 #133
-2026/05/10-12:40:11.069 29e4 Delete type=2 #134
-2026/05/10-12:40:11.069 29e4 Delete type=0 #148
-2026/05/10-12:40:11.069 29e4 Delete type=2 #149
-2026/05/10-12:40:11.069 29e4 Delete type=2 #163
-2026/05/10-12:40:11.069 29e4 Delete type=0 #178
-2026/05/10-12:40:11.069 29e4 Delete type=2 #179
-2026/05/10-12:40:11.070 29e4 Delete type=0 #195
-2026/05/10-12:40:11.070 29e4 Delete type=2 #196
-2026/05/10-12:40:11.070 29e4 Delete type=2 #212
-2026/05/10-12:40:11.070 29e4 Delete type=2 #230
+2026/05/10-13:01:56.015 465c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.46a2943d\flutter_tools_chrome_device.23be6cc\Default\Site Characteristics Database/MANIFEST-000001
+2026/05/10-13:01:56.018 465c Recovering log #3
+2026/05/10-13:01:56.018 465c Level-0 table #268: started
+2026/05/10-13:01:56.024 465c Level-0 table #268: 540 bytes OK
+2026/05/10-13:01:56.024 465c Recovering log #6
+2026/05/10-13:01:56.025 465c Level-0 table #269: started
+2026/05/10-13:01:56.030 465c Level-0 table #269: 165 bytes OK
+2026/05/10-13:01:56.031 465c Recovering log #10
+2026/05/10-13:01:56.031 465c Level-0 table #270: started
+2026/05/10-13:01:56.036 465c Level-0 table #270: 165 bytes OK
+2026/05/10-13:01:56.036 465c Recovering log #15
+2026/05/10-13:01:56.037 465c Level-0 table #271: started
+2026/05/10-13:01:56.046 465c Level-0 table #271: 165 bytes OK
+2026/05/10-13:01:56.046 465c Recovering log #22
+2026/05/10-13:01:56.046 465c Level-0 table #272: started
+2026/05/10-13:01:56.051 465c Level-0 table #272: 212 bytes OK
+2026/05/10-13:01:56.051 465c Recovering log #36
+2026/05/10-13:01:56.051 465c Level-0 table #273: started
+2026/05/10-13:01:56.056 465c Level-0 table #273: 196 bytes OK
+2026/05/10-13:01:56.056 465c Recovering log #52
+2026/05/10-13:01:56.056 465c Level-0 table #274: started
+2026/05/10-13:01:56.060 465c Level-0 table #274: 165 bytes OK
+2026/05/10-13:01:56.061 465c Recovering log #62
+2026/05/10-13:01:56.061 465c Level-0 table #275: started
+2026/05/10-13:01:56.065 465c Level-0 table #275: 180 bytes OK
+2026/05/10-13:01:56.065 465c Recovering log #82
+2026/05/10-13:01:56.065 465c Level-0 table #276: started
+2026/05/10-13:01:56.070 465c Level-0 table #276: 165 bytes OK
+2026/05/10-13:01:56.070 465c Recovering log #94
+2026/05/10-13:01:56.070 465c Level-0 table #277: started
+2026/05/10-13:01:56.074 465c Level-0 table #277: 165 bytes OK
+2026/05/10-13:01:56.074 465c Recovering log #107
+2026/05/10-13:01:56.074 465c Level-0 table #278: started
+2026/05/10-13:01:56.079 465c Level-0 table #278: 179 bytes OK
+2026/05/10-13:01:56.079 465c Recovering log #133
+2026/05/10-13:01:56.079 465c Level-0 table #279: started
+2026/05/10-13:01:56.083 465c Level-0 table #279: 165 bytes OK
+2026/05/10-13:01:56.084 465c Recovering log #148
+2026/05/10-13:01:56.084 465c Level-0 table #280: started
+2026/05/10-13:01:56.088 465c Level-0 table #280: 320 bytes OK
+2026/05/10-13:01:56.089 465c Recovering log #178
+2026/05/10-13:01:56.089 465c Level-0 table #281: started
+2026/05/10-13:01:56.094 465c Level-0 table #281: 168 bytes OK
+2026/05/10-13:01:56.094 465c Recovering log #195
+2026/05/10-13:01:56.094 465c Level-0 table #282: started
+2026/05/10-13:01:56.099 465c Level-0 table #282: 267 bytes OK
+2026/05/10-13:01:56.099 465c Recovering log #229
+2026/05/10-13:01:56.099 465c Level-0 table #283: started
+2026/05/10-13:01:56.103 465c Level-0 table #283: 330 bytes OK
+2026/05/10-13:01:56.104 465c Recovering log #265
+2026/05/10-13:01:56.104 465c Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.46a2943d\flutter_tools_chrome_device.23be6cc\Default\Site Characteristics Database/000265.log 
+2026/05/10-13:01:56.107 465c Delete type=0 #3
+2026/05/10-13:01:56.107 465c Delete type=2 #4
+2026/05/10-13:01:56.107 465c Delete type=0 #6
+2026/05/10-13:01:56.107 465c Delete type=2 #7
+2026/05/10-13:01:56.107 465c Delete type=2 #8
+2026/05/10-13:01:56.107 465c Delete type=0 #10
+2026/05/10-13:01:56.107 465c Delete type=0 #15
+2026/05/10-13:01:56.107 465c Delete type=2 #16
+2026/05/10-13:01:56.107 465c Delete type=0 #22
+2026/05/10-13:01:56.107 465c Delete type=2 #23
+2026/05/10-13:01:56.107 465c Delete type=2 #29
+2026/05/10-13:01:56.107 465c Delete type=0 #36
+2026/05/10-13:01:56.107 465c Delete type=2 #37
+2026/05/10-13:01:56.107 465c Delete type=2 #44
+2026/05/10-13:01:56.107 465c Delete type=0 #52
+2026/05/10-13:01:56.107 465c Delete type=2 #53
+2026/05/10-13:01:56.107 465c Delete type=0 #62
+2026/05/10-13:01:56.107 465c Delete type=2 #63
+2026/05/10-13:01:56.107 465c Delete type=2 #72
+2026/05/10-13:01:56.107 465c Delete type=0 #82
+2026/05/10-13:01:56.107 465c Delete type=2 #83
+2026/05/10-13:01:56.107 465c Delete type=0 #94
+2026/05/10-13:01:56.108 465c Delete type=2 #95
+2026/05/10-13:01:56.108 465c Delete type=0 #107
+2026/05/10-13:01:56.108 465c Delete type=2 #108
+2026/05/10-13:01:56.108 465c Delete type=2 #120
+2026/05/10-13:01:56.108 465c Delete type=0 #133
+2026/05/10-13:01:56.108 465c Delete type=2 #134
+2026/05/10-13:01:56.108 465c Delete type=0 #148
+2026/05/10-13:01:56.108 465c Delete type=2 #149
+2026/05/10-13:01:56.108 465c Delete type=2 #163
+2026/05/10-13:01:56.108 465c Delete type=0 #178
+2026/05/10-13:01:56.108 465c Delete type=2 #179
+2026/05/10-13:01:56.108 465c Delete type=0 #195
+2026/05/10-13:01:56.108 465c Delete type=2 #196
+2026/05/10-13:01:56.108 465c Delete type=2 #212
+2026/05/10-13:01:56.108 465c Delete type=0 #229
+2026/05/10-13:01:56.108 465c Delete type=2 #230
+2026/05/10-13:01:56.108 465c Delete type=2 #247
+2026/05/10-13:01:56.115 4114 Compacting 16@0 + 1@1 files
+2026/05/10-13:01:56.121 4114 Generated table #284@0: 5 keys, 387 bytes
+2026/05/10-13:01:56.121 4114 Compacted 16@0 + 1@1 files => 387 bytes
+2026/05/10-13:01:56.123 4114 compacted to: files[ 0 1 0 0 0 0 0 ]
+2026/05/10-13:01:56.124 4114 Delete type=2 #266
+2026/05/10-13:01:56.124 4114 Delete type=2 #268
+2026/05/10-13:01:56.124 4114 Delete type=2 #269
+2026/05/10-13:01:56.124 4114 Delete type=2 #270
+2026/05/10-13:01:56.124 4114 Delete type=2 #271
+2026/05/10-13:01:56.124 4114 Delete type=2 #272
+2026/05/10-13:01:56.124 4114 Delete type=2 #273
+2026/05/10-13:01:56.125 4114 Delete type=2 #274
+2026/05/10-13:01:56.125 4114 Delete type=2 #275
+2026/05/10-13:01:56.125 4114 Delete type=2 #276
+2026/05/10-13:01:56.125 4114 Delete type=2 #277
+2026/05/10-13:01:56.125 4114 Delete type=2 #278
+2026/05/10-13:01:56.125 4114 Delete type=2 #279
+2026/05/10-13:01:56.125 4114 Delete type=2 #280
+2026/05/10-13:01:56.125 4114 Delete type=2 #281
+2026/05/10-13:01:56.125 4114 Delete type=2 #282
+2026/05/10-13:01:56.125 4114 Delete type=2 #283

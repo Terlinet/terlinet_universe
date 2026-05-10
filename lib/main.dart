@@ -7,6 +7,11 @@ import 'dart:ui_web' as ui_web;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
+// Controlador para a URL da imagem do holograma
+final ValueNotifier<String?> hologramImageUrlNotifier = ValueNotifier(null);
+// Referência para o elemento de imagem que será manipulado
+html.ImageElement? _hologramImageElement;
+
 void main() {
   runApp(const TerlineTUniverseApp());
 }
@@ -113,8 +118,26 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           ..style.height = '100%'
           ..style.objectFit = 'cover'
           ..style.borderRadius = '12px'
-          ..crossOrigin = 'anonymous'; // Adicionado para evitar bloqueio de segurança
-        if (_currentImageUrl != null) img.src = _currentImageUrl!;
+          ..crossOrigin = 'anonymous'
+          ..onError.listen((event) {
+            print('Erro ao carregar imagem: ${img.src}');
+            img.src = 'https://via.placeholder.com/500?text=Imagem+indisponivel';
+          });
+
+        _hologramImageElement = img;
+
+        // Escuta mudanças na URL e atualiza o src
+        hologramImageUrlNotifier.addListener(() {
+          final newUrl = hologramImageUrlNotifier.value;
+          if (newUrl != null && img.src != newUrl) {
+            img.src = newUrl;
+          }
+        });
+
+        // Se já houver uma URL no momento da criação, já define
+        if (hologramImageUrlNotifier.value != null) {
+          img.src = hologramImageUrlNotifier.value!;
+        }
         return img;
       },
     );
@@ -515,21 +538,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       final String? imageUrl = imageUrls.isNotEmpty ? imageUrls[0] : data['image_url'];
 
       if (mounted && imageUrl != null) {
-        // Registra uma nova fábrica única para esta URL específica para evitar cache de PlatformView
-        final String viewType = 'hologram-${imageUrl.hashCode}';
-        ui_web.platformViewRegistry.registerViewFactory(
-          viewType,
-          (int viewId) {
-            final img = html.ImageElement()
-              ..src = imageUrl
-              ..style.width = '100%'
-              ..style.height = '100%'
-              ..style.objectFit = 'cover'
-              ..style.borderRadius = '12px'
-              ..crossOrigin = 'anonymous';
-            return img;
-          },
-        );
+        // Atualiza a URL no controlador (a view factory única vai reagir)
+        hologramImageUrlNotifier.value = imageUrl;
 
         setState(() {
           _aiMessage = textResponse;
@@ -845,9 +855,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                                   border: Border.all(color: Colors.blue.withOpacity(0.3)),
                                   color: Colors.black,
                                 ),
-                                child: HtmlElementView(
-                                  key: ValueKey(_currentImageUrl),
-                                  viewType: 'hologram-${_currentImageUrl.hashCode}',
+                                child: const HtmlElementView(
+                                  viewType: 'hologram-view',
                                 ),
                               ),
                             ),
