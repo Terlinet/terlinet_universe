@@ -49,6 +49,10 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   // IA & Camera Variables
   final html.VideoElement _cameraVideoElement = html.VideoElement();
   bool _isUserLooking = false;
+  final Set<int> _greetedUsers = {}; // Rastreia IDs de usuários já saudados
+  Map<int, Offset> _activeUsers = {}; // Mapeia ID -> Posição do rosto
+  int _nextUserId = 0;
+
   dynamic _faceDetection;
   dynamic _hands; // MediaPipe Hands
   Timer? _detectionTimer;
@@ -114,16 +118,22 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       'hologram-view',
       (int viewId) {
         final img = html.ImageElement();
+        bool fallbackTried = false;
+
         img
           ..style.width = '100%'
           ..style.height = '100%'
           ..style.objectFit = 'cover'
           ..style.borderRadius = '12px'
-          ..crossOrigin = 'anonymous'
-          ..onError.listen((event) {
-            print('Erro ao carregar imagem: ${img.src}');
-            img.src = 'https://via.placeholder.com/500?text=Imagem+indisponivel';
-          });
+          ..crossOrigin = 'anonymous';
+
+        img.onError.listen((event) {
+          if (!fallbackTried) {
+            fallbackTried = true;
+            print('Aviso: Projetando holograma reserva...');
+            img.src = 'https://placehold.co/600x400/000000/66aaff?text=Sincronizando+Holograma...';
+          }
+        });
 
         _hologramImageElement = img;
 
@@ -131,6 +141,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         hologramImageUrlNotifier.addListener(() {
           final newUrl = hologramImageUrlNotifier.value;
           if (newUrl != null && img.src != newUrl) {
+            fallbackTried = false;
             img.src = newUrl;
           }
         });
@@ -172,7 +183,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
 
   void _initSpeechRecognition() {
     try {
-      final speechClass = js_util.getProperty(html.window, 'webkitSpeechRecognition') ?? 
+      final speechClass = js_util.getProperty(html.window, 'webkitSpeechRecognition') ??
                           js_util.getProperty(html.window, 'SpeechRecognition');
       if (speechClass != null) {
         _recognition = js_util.callConstructor(speechClass, []);
@@ -184,7 +195,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           final firstResult = js_util.getProperty(results, 0);
           final firstAlternative = js_util.getProperty(firstResult, 0);
           final transcript = js_util.getProperty(firstAlternative, 'transcript');
-          
+
           if (mounted) {
             setState(() {
               _textController.text = transcript;
@@ -309,9 +320,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       js_util.setProperty(options, 'locateFile', allowInterop((file, base) {
         return 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4/$file';
       }));
-      
+
       _faceDetection = js_util.callConstructor(faceClass, [options]);
-      
+
       // Tratamento de erros do MediaPipe
       js_util.setProperty(_faceDetection, 'onError', allowInterop((err) {
         print("MediaPipe FaceDetection error: $err");
@@ -332,37 +343,63 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           try {
             final detections = js_util.getProperty(results, 'detections');
             if (detections == null) {
-              if (mounted) setState(() { _detectedFaces = []; _isUserLooking = false; });
+              if (mounted) setState(() { _detectedFaces = []; _isUserLooking = false; _activeUsers.clear(); });
               return;
             }
-            
-            final int len = js_util.getProperty(detections, 'length') ?? 0;
-            bool found = len > 0;
 
+            final int len = js_util.getProperty(detections, 'length') ?? 0;
             List<List<Offset>> allFaces = [];
+            Map<int, Offset> currentFrameUsers = {};
+            bool hasNewUser = false;
+
             for (int d = 0; d < len; d++) {
               final detection = js_util.getProperty(detections, d);
-              if (detection != null) {
-                final locationData = js_util.getProperty(detection, 'locationData');
-                if (locationData != null) {
-                  final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
-                  if (keypoints != null) {
-                    List<Offset> facePoints = [];
-                    final int kpLen = js_util.getProperty(keypoints, 'length') ?? 0;
-                    for (int i = 0; i < kpLen; i++) {
-                      final kp = js_util.getProperty(keypoints, i);
-                      if (kp != null) {
-                        try {
-                          double? x = js_util.getProperty(kp, 'x')?.toDouble();
-                          double? y = js_util.getProperty(kp, 'y')?.toDouble();
-                          if (x != null && y != null) {
-                            facePoints.add(Offset(x, y));
-                          }
-                        } catch (_) {}
-                      }
-                    }
-                    allFaces.add(facePoints);
+              if (detection == null) continue;
+
+              final locationData = js_util.getProperty(detection, 'locationData');
+              final relativeBox = js_util.getProperty(locationData, 'relativeBoundingBox');
+
+              if (relativeBox != null) {
+                // Calcula o centro do rosto para rastreio
+                double centerX = js_util.getProperty(relativeBox, 'xmin') + (js_util.getProperty(relativeBox, 'width') / 2);
+                double centerY = js_util.getProperty(relativeBox, 'ymin') + (js_util.getProperty(relativeBox, 'height') / 2);
+                Offset center = Offset(centerX, centerY);
+
+                // Tenta encontrar um ID existente próximo a esta posição
+                int? foundId;
+                _activeUsers.forEach((id, pos) {
+                  if ((pos - center).distance < 0.15) { // Threshold de proximidade
+                    foundId = id;
                   }
+                });
+
+                bool isFaceNew = false;
+                if (foundId == null) {
+                  // Novo usuário detectado!
+                  foundId = _nextUserId++;
+                  isFaceNew = true;
+                }
+
+                currentFrameUsers[foundId!] = center;
+
+                // Extrai pontos para o painter (opcional, mas mantido internamente)
+                final keypoints = js_util.getProperty(locationData, 'relativeKeypoints');
+                if (keypoints != null) {
+                  List<Offset> facePoints = [];
+                  final int kpLen = js_util.getProperty(keypoints, 'length') ?? 0;
+                  for (int i = 0; i < kpLen; i++) {
+                    final kp = js_util.getProperty(keypoints, i);
+                    if (kp != null) {
+                      facePoints.add(Offset(js_util.getProperty(kp, 'x'), js_util.getProperty(kp, 'y')));
+                    }
+                  }
+                  allFaces.add(facePoints);
+                }
+
+                // Se é um novo usuário e não foi saudado ainda
+                if (isFaceNew && !_greetedUsers.contains(foundId) && !_isProcessing) {
+                  _greetedUsers.add(foundId!);
+                  _triggerAiInteraction(customText: "Olá TerlineT, sou um novo usuário chegando ao seu universo. Me receba de forma calorosa e literária.");
                 }
               }
             }
@@ -370,17 +407,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             if (mounted) {
               setState(() {
                 _detectedFaces = allFaces;
+                _activeUsers = currentFrameUsers;
                 _isIaReady = true;
-                if (found != _isUserLooking) {
-                  _isUserLooking = found;
-                  if (_isUserLooking && !_isProcessing) {
-                    _triggerAiInteraction();
-                  }
-                }
+                _isUserLooking = _activeUsers.isNotEmpty;
               });
             }
           } catch (e) {
-            // Silencia erros de processamento de frame
+            print("Erro no rastreio: $e");
           }
         })
       ]);
@@ -481,7 +514,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
   // Chamada Real para o seu Servidor no Hugging Face
   Future<void> _triggerAiInteraction({String? customText}) async {
     if (_isProcessing) return;
-    
+
     String prompt = customText ?? "Olá TerlineT, acabei de olhar para você. Me dê as boas vindas ao seu universo e pergunte como pode me ajudar.";
 
     // Se for a primeira interação, injeta a instrução do Sabre de Luz
@@ -613,7 +646,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
               }
               return CustomPaint(
                 painter: UniversePainter(
-                  particles: particles, 
+                  particles: particles,
                   isUserLooking: _isUserLooking
                 ),
                 child: Container(),
@@ -730,13 +763,18 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
             ),
           ),
 
-          // Logo e Mensagem da IA
+          // LOGO E MENSAGEM DA IA (Ajustado para dar espaço ao Nexo)
           Center(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(vertical: 40),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  // O NEXO DE PROSPERIDADE (Elevado e com mais espaço)
+                  const SizedBox(height: 40),
+                  const NexusOfProsperity(),
+                  const SizedBox(height: 60),
+
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -815,7 +853,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ),
                     ),
                   ),
-                  
+
                   // Mensagem Dinâmica da IA (Servidor HuggingFace)
                   const SizedBox(height: 40),
                   AnimatedContainer(
@@ -836,7 +874,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                     ),
                     child: Column(
                       children: [
-                        if (_isProcessing) 
+                        if (_isProcessing)
                           const Padding(
                             padding: EdgeInsets.only(bottom: 12),
                             child: LinearProgressIndicator(
@@ -916,7 +954,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                       ],
                     ),
                   ),
-                  
+
                   if (!_hasCamera)
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
@@ -1076,41 +1114,8 @@ class FaceAnalysisPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (faces.isEmpty) return;
-
-    final paint = Paint()
-      ..color = Colors.greenAccent
-      ..strokeWidth = 4.0
-      ..strokeCap = StrokeCap.round;
-
-    final linePaint = Paint()
-      ..color = Colors.greenAccent.withOpacity(0.5)
-      ..strokeWidth = 1.2;
-
-    for (var points in faces) {
-      // Converte pontos relativos para coordenadas do widget (Efeito Espelho)
-      List<Offset> canvasPoints = points.map((p) => Offset(
-        (1 - p.dx) * size.width,
-        p.dy * size.height
-      )).toList();
-
-      // Desenha as linhas de conexão (Malha de análise digital verde)
-      for (int i = 0; i < canvasPoints.length; i++) {
-        for (int j = i + 1; j < canvasPoints.length; j++) {
-          canvas.drawLine(canvasPoints[i], canvasPoints[j], linePaint);
-        }
-      }
-
-      // Desenha os pontos (Keypoints biométricos verdes)
-      for (var point in canvasPoints) {
-        // Ponto central sólido
-        canvas.drawCircle(point, 6, paint);
-        // Aura de brilho verde
-        canvas.drawCircle(point, 12, Paint()
-          ..color = Colors.greenAccent.withOpacity(0.2)
-          ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5));
-      }
-    }
+    // Por enquanto, não desenha nada na tela conforme solicitado.
+    // O rastreio agora é silencioso.
   }
 
   @override
@@ -1131,14 +1136,14 @@ class UniversePainter extends CustomPainter {
       ..strokeWidth = 2.0;
 
     final linePaint = Paint()..strokeWidth = 0.8;
-    
+
     for (int i = 0; i < particles.length; i++) {
       var p1 = particles[i];
       double x1 = p1.x * size.width;
       double y1 = p1.y * size.height;
 
       canvas.drawCircle(Offset(x1, y1), 1.2, pointPaint);
-      
+
       for (int j = i + 1; j < particles.length; j++) {
         var p2 = particles[j];
         double x2 = p2.x * size.width;
@@ -1150,8 +1155,8 @@ class UniversePainter extends CustomPainter {
 
         if (distance < 100) {
           double opacity = (1.0 - distance / 100);
-          linePaint.color = i % 2 == 0 
-              ? (isUserLooking ? Colors.blueAccent : Colors.white).withOpacity(opacity * 0.2) 
+          linePaint.color = i % 2 == 0
+              ? (isUserLooking ? Colors.blueAccent : Colors.white).withOpacity(opacity * 0.2)
               : Colors.blue.withOpacity(opacity * 0.25);
           canvas.drawLine(Offset(x1, y1), Offset(x2, y2), linePaint);
         }
@@ -1161,4 +1166,155 @@ class UniversePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant UniversePainter oldDelegate) => true;
+}
+
+class NexusOfProsperity extends StatefulWidget {
+  const NexusOfProsperity({super.key});
+
+  @override
+  State<NexusOfProsperity> createState() => _NexusOfProsperityState();
+}
+
+class _NexusOfProsperityState extends State<NexusOfProsperity> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return SizedBox(
+          height: 260, // Aumentado para garantir que os números caibam
+          width: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              // Brilho de fundo (Aura de Paz)
+              Container(
+                width: 180,
+                height: 180,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueAccent.withOpacity(0.15),
+                      blurRadius: 50,
+                      spreadRadius: 20,
+                    ),
+                    BoxShadow(
+                      color: Colors.amberAccent.withOpacity(0.05),
+                      blurRadius: 80,
+                      spreadRadius: 10,
+                    ),
+                  ],
+                ),
+              ),
+              // Geometria Sagrada em Movimento
+              CustomPaint(
+                size: const Size(200, 200),
+                painter: ProsperityGeometryPainter(progress: _controller.value),
+              ),
+              // Contador de Impacto (Marketing/Finanças)
+              Positioned(
+                bottom: 0, // Alinhado ao fundo da nova área maior
+                child: Column(
+                  children: [
+                    const Text(
+                      "GLOBAL PROSPERITY INDEX",
+                      style: TextStyle(
+                        color: Colors.amberAccent,
+                        fontSize: 8,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "+${(1245000 + (_controller.value * 1000)).toStringAsFixed(0)} HELP TOKENS",
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        fontFamily: 'Courier',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ProsperityGeometryPainter extends CustomPainter {
+  final double progress;
+  ProsperityGeometryPainter({required this.progress});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    for (int i = 0; i < 8; i++) {
+      final angle = (i * math.pi / 4) + (progress * math.pi * 2);
+      final opacity = 0.2 + (math.sin(progress * math.pi * 2 + i) * 0.1);
+
+      // Alterna entre Azul (Paz) e Ouro (Prosperidade)
+      paint.color = i % 2 == 0
+          ? Colors.blueAccent.withOpacity(opacity)
+          : Colors.amberAccent.withOpacity(opacity);
+
+      // Desenha círculos entrelaçados (Flor da Vida simplificada)
+      canvas.drawCircle(
+        Offset(
+          center.dx + math.cos(angle) * 30,
+          center.dy + math.sin(angle) * 30
+        ),
+        60,
+        paint
+      );
+    }
+
+    // Núcleo central pulsante
+    final corePaint = Paint()
+      ..color = Colors.white.withOpacity(0.8)
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(center, 4 + (math.sin(progress * math.pi * 10) * 2), corePaint);
+
+    // Anéis orbitais (Simbolizando Blockchain/Conectividade)
+    paint.strokeWidth = 0.5;
+    paint.color = Colors.white10;
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: 180, height: 60),
+      paint
+    );
+    canvas.drawOval(
+      Rect.fromCenter(center: center, width: 60, height: 180),
+      paint
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant ProsperityGeometryPainter oldDelegate) => true;
 }
