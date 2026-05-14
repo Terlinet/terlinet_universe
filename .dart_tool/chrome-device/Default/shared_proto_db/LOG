@@ -1,6 +1,2 @@
-2026/05/08-18:29:49.553 1df8 Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.a5c9fec3\flutter_tools_chrome_device.19561d50\Default\shared_proto_db/MANIFEST-000001
-2026/05/08-18:29:49.554 1df8 Recovering log #10
-2026/05/08-18:29:49.555 1df8 Reusing old log C:\Users\tertu\AppData\Local\Temp\flutter_tools.a5c9fec3\flutter_tools_chrome_device.19561d50\Default\shared_proto_db/000010.log 
-2026/05/08-18:29:49.555 1df8 Delete type=0 #3
-2026/05/08-18:29:49.555 1df8 Delete type=0 #4
-2026/05/08-18:29:49.555 1df8 Delete type=0 #7
+2026/05/14-10:57:13.261 2f3c Creating DB C:\Users\tertu\AppData\Local\Temp\flutter_tools.6d0087dd\flutter_tools_chrome_device.2543e344\Default\shared_proto_db since it was missing.
+2026/05/14-10:57:13.295 2f3c Reusing MANIFEST C:\Users\tertu\AppData\Local\Temp\flutter_tools.6d0087dd\flutter_tools_chrome_device.2543e344\Default\shared_proto_db/MANIFEST-000001
