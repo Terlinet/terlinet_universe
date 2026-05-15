@@ -24733,7 +24733,7 @@ $S:2}
 A.akS.prototype={
 $1(a){var s=A.cP().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/59aa584fdf100e6c78c785d8a5b565d1de4b48ab/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/":s)+a},
 $S:109}
 A.Ig.prototype={
 gu(a){var s=this.a
